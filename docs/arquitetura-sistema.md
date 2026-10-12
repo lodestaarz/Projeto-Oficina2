@@ -92,3 +92,41 @@ A arquitetura deverá considerar os seguintes aspectos:
 - Manter credenciais e chaves de serviços externos em variáveis de ambiente.
 - Não versionar arquivos `.env` com credenciais reais.
 - Tratar falhas de autenticação, indisponibilidade do banco e erros nas requisições.
+
+## 7. Diagrama de Arquitetura
+
+```mermaid
+flowchart TD
+    U[Usuário]
+
+    subgraph Frontend["Frontend"]
+        I[Interface gráfica]
+        M[Área de movimentação]
+        C[Organização e execução de comandos]
+        A[Autenticação e perfil]
+    end
+
+    subgraph Backend["Backend"]
+        API[API REST]
+        AUTH[Serviço de autenticação]
+        LOGIC[Regras de negócio]
+        DATA[Camada de acesso aos dados]
+    end
+
+    DB[(Banco de dados)]
+    GOOGLE[Autenticação Google]
+
+    U --> I
+    I --> M
+    I --> C
+    I --> A
+
+    A --> API
+    C --> API
+    API --> AUTH
+    API --> LOGIC
+    AUTH --> DATA
+    LOGIC --> DATA
+    DATA --> DB
+    AUTH <--> GOOGLE
+```
