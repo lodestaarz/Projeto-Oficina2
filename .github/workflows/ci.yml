@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          # Depois de commitar o package-lock.json, ative o cache:
+          # cache: npm
+
+      - name: Instalar dependências
+        # Troque por "npm ci" assim que o package-lock.json estiver no repositório
+        run: npm install
+
+      # Depois de rodar "npm run format" uma vez e commitar, ative a checagem:
+      # - name: Verificar formatação
+      #   run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Testes
+        run: npm test
+
+      - name: Build do frontend
+        run: npm run build

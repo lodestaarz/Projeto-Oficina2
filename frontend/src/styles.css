@@ -1,0 +1,83 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: #1f2430;
+  background: #f4f6fb;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.board {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border: 3px solid #1f2430;
+  border-radius: 12px;
+  background: #ffffff;
+  aspect-ratio: 1;
+}
+
+.cell {
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #e8ecf5;
+}
+
+.character {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: #ff7a45;
+  transition: transform 0.1s ease-out;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-areas:
+    '. up .'
+    'left down right';
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.control {
+  height: 56px;
+  font-size: 24px;
+  border: none;
+  border-radius: 12px;
+  background: #3b5bdb;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.control:hover {
+  background: #2f4ac0;
+}
+
+.control-up {
+  grid-area: up;
+}
+.control-left {
+  grid-area: left;
+}
+.control-down {
+  grid-area: down;
+}
+.control-right {
+  grid-area: right;
+}
+
+.position {
+  color: #5c6475;
+}
