@@ -11,11 +11,9 @@
 >
 >[Willian Hiroshi da Silva Fukuda](https://github.com/fkdhiro)
 
-# ELLP - Ferramenta Visual de Lógica e Programação
-
 ## Sobre o Projeto
 
-Este projeto faz parte da disciplina Oficina de Integração 2 e está relacionado à iniciativa ELLP (Ensino Lúdico de Lógica e Programação).
+Este projeto faz parte da disciplina Oficina de Integração 2 e está relacionado ao projeto de extensão ELLP (Ensino Lúdico de Lógica e Programação).
 
 A proposta consiste no desenvolvimento de uma ferramenta visual e interativa para o ensino de conceitos básicos de lógica de programação. Por meio da aplicação, o usuário poderá controlar um personagem em uma área delimitada utilizando comandos direcionais e organizar sequências de instruções para execução.
 
