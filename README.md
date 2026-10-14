@@ -34,14 +34,14 @@ A coluna **Situação** reflete o código da branch `main`. Atualize-a no mesmo 
 | [RF03](RF03-entrar-com-google.md) | Entrar com conta Google | Alta | Sprint 1 | Não iniciado |
 | [RF04](RF04-manter-e-encerrar-sessao.md) | Manter e encerrar a sessão | Alta | Sprint 1 | Não iniciado |
 | [RF05](RF05-visualizar-perfil.md) | Visualizar perfil | Média | Sprint 2 | Não iniciado |
-| [RF06](RF06-exibir-area-de-movimentacao.md) | Exibir a área de movimentação | Alta | Sprint 1 | Implementado |
-| [RF07](RF07-exibir-personagem.md) | Exibir o personagem e sua posição | Alta | Sprint 1 | Implementado |
-| [RF08](RF08-mover-com-botoes.md) | Mover o personagem com botões | Alta | Sprint 1 | Implementado |
-| [RF09](RF09-mover-com-teclado.md) | Mover o personagem com as setas do teclado | Alta | Sprint 1 | Implementado |
-| [RF10](RF10-respeitar-limites-da-area.md) | Respeitar os limites da área | Alta | Sprint 1 | Implementado |
+| [RF06](RF06-exibir-area-de-movimentacao.md) | Exibir a área de movimentação | Alta | Sprint 1 | Não iniciado |
+| [RF07](RF07-exibir-personagem.md) | Exibir o personagem e sua posição | Alta | Sprint 1 | Não iniciado |
+| [RF08](RF08-mover-com-botoes.md) | Mover o personagem com botões | Alta | Sprint 1 | Não iniciado |
+| [RF09](RF09-mover-com-teclado.md) | Mover o personagem com as setas do teclado | Alta | Sprint 1 | Não iniciado |
+| [RF10](RF10-respeitar-limites-da-area.md) | Respeitar os limites da área | Alta | Sprint 1 | Não iniciado |
 | [RF11](RF11-voltar-a-posicao-inicial.md) | Voltar à posição inicial | Alta | Sprint 1 | Não iniciado |
 | [RF12](RF12-executar-sequencia-de-comandos.md) | Executar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
-| [RF13](RF13-armazenar-dados-do-usuario.md) | Armazenar os dados do usuário | Alta | Sprint 1 | Parcial |
+| [RF13](RF13-armazenar-dados-do-usuario.md) | Armazenar os dados do usuário | Alta | Sprint 1 | Não iniciado |
 | [RF14](RF14-montar-sequencia-de-comandos.md) | Montar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
 
 ## Requisitos não funcionais
