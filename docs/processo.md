@@ -45,6 +45,6 @@ Uma issue só vai para **Concluído** quando:
 
 | Etapa | Período | Entrega |
 |---|---|---|
-| Preparação | 02/10 a 16/10 | Documentação, requisitos, arquitetura, ambiente, CI e projetos base |
+| Preparação | 05/10 a 16/10 | Documentação, requisitos, arquitetura, ambiente, CI e projetos base |
 | Sprint 1 | 17/10 a 07/11 | Contas e sessão, área de movimentação, botões, teclado, limites, recomeçar, tabela de usuários |
 | Sprint 2 | 08/11 a 30/11 | Sequência de comandos, execução passo a passo, perfil, testes E2E e entrega final |
