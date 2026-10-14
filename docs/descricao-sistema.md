@@ -31,6 +31,6 @@ Desenvolver uma ferramenta visual que permita ao usuário movimentar um personag
 
 - [Requisitos](requisitos.md)
 - [Arquitetura do sistema](arquitetura-sistema.md)
-- [Tecnologias e decisões](tecnologias.md)
+- [Tecnologias](tecnologias.md)
 - [Estratégia de testes](testes.md)
 - [Processo e cronograma](processo.md)
