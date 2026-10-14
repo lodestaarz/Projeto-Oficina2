@@ -1,6 +1,6 @@
 # Estratégia de testes
 
-Responsável: 
+Responsável: Willian Hiroshi
 
 ## Tipos de teste
 
@@ -23,7 +23,7 @@ Os casos estão em [`tests/casos-de-teste.md`](../tests/casos-de-teste.md), e a 
 ## Dados e dependências externas
 
 - **Google:** os testes nunca chamam o Google de verdade. A verificação do ID token é substituída por um mock (`vi.mock('google-auth-library')`), que devolve um usuário fictício ou lança erro, conforme o caso.
-- **Banco:** os testes de integração usam um banco separado (`logica_ludica_test`), recriado antes da suíte com o mesmo `database/init.sql`. A `DATABASE_URL` de teste vem de `backend/.env.test`.
+- **Banco:** os testes de integração usam um banco separado (`arrowbot_test`), recriado antes da suíte com o mesmo `database/init.sql`. A URL do banco de teste vem da variável `TEST_DATABASE_URL` (sem ela, a suíte é pulada). Para rodar: `TEST_DATABASE_URL=postgres://app:app@localhost:5432/arrowbot_test npm run test:integration -w backend`. Os testes de API comuns não precisam de banco: usam um repositório em memória (`backend/tests/helpers/repositorioEmMemoria.ts`) com as mesmas regras da tabela.
 - **JWT:** os testes usam um `JWT_SECRET` fixo de teste e geram tokens expirados ou adulterados de propósito.
 
 ## Cobertura
@@ -36,7 +36,7 @@ Os casos estão em [`tests/casos-de-teste.md`](../tests/casos-de-teste.md), e a 
 
 - Localmente, com `npm test` na raiz.
 - No GitHub Actions, a cada push na `main` e a cada pull request, junto com lint e build.
-- Os testes E2E entram no CI na Sprint 2, num job separado que sobe banco, backend e frontend.
+- Os testes de integração com o banco e os E2E rodam no CI em jobs separados, cada um com um PostgreSQL de serviço. Para rodar os E2E localmente: `npm run db:up`, `npx playwright install` (uma vez) e `npm run test:e2e`.
 
 ## Critérios de aprovação
 
