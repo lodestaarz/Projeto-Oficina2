@@ -2,7 +2,7 @@
 
 ## Proposta
 
-A Lógica Lúdica é uma ferramenta web visual e interativa para o ensino de conceitos básicos de lógica de programação. O usuário controla um personagem dentro de uma área delimitada, em forma de grade, usando comandos de direção: Cima, Baixo, Esquerda e Direita. Além de mover o personagem diretamente, o usuário pode organizar uma sequência de comandos e executá-la, vendo cada passo acontecer na tela.
+O ArrowBot é uma ferramenta web visual e interativa para o ensino de conceitos básicos de lógica de programação. O usuário controla um personagem dentro de uma área delimitada, em forma de grade, usando comandos de direção: Cima, Baixo, Esquerda e Direita. Além de mover o personagem diretamente, o usuário pode organizar uma sequência de comandos e executá-la, vendo cada passo acontecer na tela.
 
 A ferramenta faz parte da disciplina Oficina de Integração 2 (Engenharia de Software, UTFPR-CP, 2º semestre de 2026) e está relacionada ao projeto de extensão ELLP (Ensino Lúdico de Lógica e Programação).
 
@@ -27,13 +27,9 @@ Desenvolver uma ferramenta visual que permita ao usuário movimentar um personag
 - O personagem é virtual. Não há envio de comandos para robôs físicos ou placas.
 - Não há área administrativa nem perfis com permissões diferentes.
 
-## Usuários do sistema
-
-- **Aprendiz:** usuário principal. Cria uma conta ou entra com Google, move o personagem, monta e executa sequências de comandos.
-- **Monitor ou educador:** conduz as atividades das oficinas. Nesta versão, usa as mesmas funcionalidades do aprendiz.
-
 ## Documentos relacionados
 
+- [Requisitos](requisitos.md)
 - [Arquitetura do sistema](arquitetura-sistema.md)
 - [Tecnologias e decisões](tecnologias.md)
 - [Estratégia de testes](testes.md)
