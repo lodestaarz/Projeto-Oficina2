@@ -18,7 +18,3 @@ Este projeto faz parte da disciplina Oficina de Integração 2 e está relaciona
 A proposta consiste no desenvolvimento de uma ferramenta visual e interativa para o ensino de conceitos básicos de lógica de programação. Por meio da aplicação, o usuário poderá controlar um personagem em uma área delimitada utilizando comandos direcionais e organizar sequências de instruções para execução.
 
 O projeto busca proporcionar uma experiência simples e acessível, permitindo que o usuário compreenda conceitos como sequência de comandos, direção e movimentação de forma prática e visual.
-
-## Objetivo Geral
-
-Desenvolver uma ferramenta visual que permita ao usuário movimentar um personagem por meio de comandos básicos.
