@@ -34,7 +34,6 @@ Desenvolver uma ferramenta visual que permita ao usuário movimentar um personag
 
 ## Documentos relacionados
 
-- [Requisitos](../requisitos/README.md)
 - [Arquitetura do sistema](arquitetura-sistema.md)
 - [Tecnologias e decisões](tecnologias.md)
 - [Estratégia de testes](testes.md)
