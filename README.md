@@ -44,10 +44,6 @@ A coluna **Situação** reflete o código da branch `main`. Atualize-a no mesmo 
 | [RF13](RF13-armazenar-dados-do-usuario.md) | Armazenar os dados do usuário | Alta | Sprint 1 | Parcial |
 | [RF14](RF14-montar-sequencia-de-comandos.md) | Montar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
 
-> O RF14 foi criado nesta revisão. O RF12 executa uma sequência, mas antes nenhum requisito dizia como o usuário monta essa sequência.
->
-> A prioridade do RF02 passou de Média para Alta, porque o cadastro com senha (RF01, Alta) não tem utilidade sem o login com senha.
-
 ## Requisitos não funcionais
 
 | Código | Descrição | Categoria |
