@@ -43,8 +43,6 @@ Uma issue só vai para **Concluído** quando:
 
 ## Cronograma
 
-> Datas a conferir com o calendário oficial da disciplina.
-
 | Etapa | Período | Entrega |
 |---|---|---|
 | Preparação | 02/10 a 16/10 | Documentação, requisitos, arquitetura, ambiente, CI e projetos base |
