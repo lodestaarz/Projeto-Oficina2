@@ -73,4 +73,4 @@ A coluna **Situação** reflete o código da branch `main`. Atualize-a no mesmo 
 
 ## Rastreabilidade
 
-A ligação entre requisitos e casos de teste está em [`tests/matriz-rastreabilidade.md`](../tests/matriz-rastreabilidade.md).
+A ligação entre requisitos e casos de teste está em [`tests/matriz-rastreabilidade.md`](../main/tests/matriz-rastreabilidade.md).
