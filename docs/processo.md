@@ -10,7 +10,6 @@ Scrum com duas sprints de desenvolvimento, precedidas por um período de prepara
 |---|---|
 | Davi Felipe Zeneratto | PO e Documentação |
 | Gabriel Moya Amorim | Backend e Banco |
-| Gleisson Santos Vieira | Backend e Banco |
 | Vinícius de Farias Santos | Frontend |
 | Willian Hiroshi da Silva Fukuda | Testes e CI |
 
