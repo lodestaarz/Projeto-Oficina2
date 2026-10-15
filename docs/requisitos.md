@@ -20,8 +20,7 @@ A coluna **Situação** reflete o código da branch `main`. Atualize-a no mesmo 
 | RF10 | Respeitar os limites da área | Alta | Sprint 1 | Não iniciado |
 | RF11 | Voltar à posição inicial | Alta | Sprint 1 | Não iniciado |
 | RF12 | Executar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
-| RF13 | Armazenar os dados do usuário | Alta | Sprint 1 | Não iniciado |
-| RF14 | Montar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
+| RF13 | Montar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
 
 ## Requisitos não funcionais
 
