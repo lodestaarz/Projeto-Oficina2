@@ -43,11 +43,11 @@ A coluna **Situação** reflete o código da branch `main`. Atualize-a no mesmo 
 | RN02   | A posição inicial do personagem é a célula (0, 0), no canto superior esquerdo. O eixo x cresce para a direita e o eixo y cresce para baixo. | RF07, RF11              |
 | RN03   | Cada comando desloca o personagem exatamente uma célula na direção indicada: Cima, Baixo, Esquerda ou Direita.                              | RF08, RF09, RF12        |
 | RN04   | Um comando que levaria o personagem para fora da grade é ignorado, e o personagem permanece onde está.                                      | RF10, RF12              |
-| RN05   | Os comandos de uma sequência são executados um por vez, na ordem em que aparecem. Um comando ignorado pela RN04 não interrompe a sequência. | RF12, RF14              |
+| RN05   | Os comandos de uma sequência são executados um por vez, na ordem em que aparecem. Um comando ignorado pela RN04 não interrompe a sequência. | RF12, RF13              |
 | RN06   | Cada e-mail corresponde a uma única conta.                                                                                                  | RF01, RF03              |
 | RN07   | A senha deve ter no mínimo 8 caracteres.                                                                                                    | RF01                    |
 | RN08   | A sessão expira após 1 dia (`JWT_EXPIRES_IN=1d`). Depois disso, o usuário precisa entrar novamente.                                         | RF04                    |
-| RN09   | Um usuário só pode consultar e alterar os próprios dados.                                                                                   | RF05, RF13, RNF06       |
+| RN09   | Um usuário só pode consultar e alterar os próprios dados.                                                                                   | RF05, RNF06             |
 
 ## Rastreabilidade
 
