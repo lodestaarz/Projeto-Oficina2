@@ -17,7 +17,7 @@ Cada área tem um responsável, que garante a entrega e mantém os documentos de
 
 ## Quadro e issues
 
-- **Quadro Kanban** no GitHub Projects com as colunas Backlog, A fazer, Em andamento, Em revisão e Concluído. Link: _(adicionar)_
+- **Quadro Kanban** no GitHub Projects com as colunas Backlog, A fazer, Em andamento, Em revisão e Concluído. Link: [`Quadro Kanban`](https://github.com/users/lodestaarz/projects/4)
 - **Cada requisito vira uma issue**, criada a partir do arquivo em [`requisitos`](../docs/requisitos.md) e usando os critérios de aceite como checklist.
 - Tarefas grandes são divididas em sub-issues por camada (frontend, backend, banco, testes), cada uma com responsável e prazo.
 - **Milestones:** Preparação, Sprint 1 e Sprint 2.
