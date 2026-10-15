@@ -25,7 +25,7 @@ Detalhes e versões  em [docs/tecnologias.md](docs/tecnologias.md).
 | [Descrição do sistema](docs/descricao-sistema.md)    | Proposta, objetivos, limites e usuários                   |
 | [Requisitos](docs/requisitos.md)                     | Requisitos funcionais, não funcionais e regras de negócio |
 | [Arquitetura](docs/arquitetura-sistema.md)           | Camadas, contrato da API, autenticação e modelo de dados  |
-| [Stack e tecnologias](docs/tecnologias.md)           | Ferramentas, versões, scripts e decisões                  |
+| [Stack e tecnologias](docs/tecnologias.md)           | Ferramentas, versões e scripts                   |
 | [Testes](docs/testes.md)                             | Estratégia de testes ([casos de teste e matriz](tests/))  |
 | [Processo e cronograma](docs/processo.md)            | Scrum, Kanban, branches, definição de pronto e datas      |
 
