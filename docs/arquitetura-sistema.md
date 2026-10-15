@@ -173,8 +173,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
 | `senha_hash` | Nulo para quem só usa Google.                                     |
 | `google_id`  | Campo `sub` do ID token do Google. Nulo para quem só usa senha.   |
 
-As "atividades" citadas no RF13 ainda precisam ser definidas pela equipe. Quando forem, entram aqui como uma tabela ligada a `usuarios(id)` por chave estrangeira com `ON DELETE CASCADE`.
-
 ## 8. Segurança
 
 - Senhas guardadas apenas como hash bcrypt (RNF05).
