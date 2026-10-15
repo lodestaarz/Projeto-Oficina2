@@ -16,7 +16,7 @@ O ArrowBot é uma ferramenta web visual para ensinar conceitos básicos de lógi
 | Testes               | Vitest, Supertest, React Testing Library + jsdom, Playwright, `@vitest/coverage-v8`   |
 | Qualidade            | ESLint 9 + `typescript-eslint`, Prettier 3, GitHub Actions                            |
 
-Detalhes, versões e decisões em [docs/tecnologias.md](docs/tecnologias.md).
+Detalhes e versões  em [docs/tecnologias.md](docs/tecnologias.md).
 
 ## Documentação
 
