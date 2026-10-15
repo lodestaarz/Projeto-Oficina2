@@ -16,7 +16,6 @@ Responsável: Willian Hiroshi
 
 - **Classes de equivalência:** separar as entradas em grupos que devem se comportar igual (válidas e inválidas) e testar pelo menos um valor de cada grupo.
 - **Valor-limite:** testar exatamente nas bordas, como o personagem na coluna 0 e na coluna 7, ou senhas com 7 e com 8 caracteres.
-- **Baseado em requisitos:** cada critério de aceite dos arquivos em `requisitos/` vira pelo menos um caso de teste.
 
 Os casos estão em [`tests/casos-de-teste.md`](../tests/casos-de-teste.md), e a ligação com os requisitos está em [`tests/matriz-rastreabilidade.md`](../tests/matriz-rastreabilidade.md).
 
