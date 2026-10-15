@@ -22,8 +22,8 @@ Detalhes e versões  em [docs/tecnologias.md](docs/tecnologias.md).
 
 | Documento                                            | Conteúdo                                                  |
 | ---------------------------------------------------- | --------------------------------------------------------- |
-| [Descrição do sistema](docs/descricao-do-sistema.md) | Proposta, objetivos, limites e usuários                   |
-| [Requisitos](requisitos/README.md)                   | Requisitos funcionais, não funcionais e regras de negócio |
+| [Descrição do sistema](docs/descricao-sistema.md)    | Proposta, objetivos, limites e usuários                   |
+| [Requisitos](docs/requisitos.md)                     | Requisitos funcionais, não funcionais e regras de negócio |
 | [Arquitetura](docs/arquitetura-sistema.md)           | Camadas, contrato da API, autenticação e modelo de dados  |
 | [Stack e tecnologias](docs/tecnologias.md)           | Ferramentas, versões, scripts e decisões                  |
 | [Testes](docs/testes.md)                             | Estratégia de testes ([casos de teste e matriz](tests/))  |
