@@ -9,9 +9,9 @@ Scrum com duas sprints de desenvolvimento, precedidas por um período de prepara
 | Pessoa | Responsabilidade |
 |---|---|
 | Davi Felipe Zeneratto | PO e Documentação |
-| Gabriel Moya Amorim | Backend e Banco |
+| Gabriel Moya Amorim | Backend e Banco / Testes e CI |
 | Vinícius de Farias Santos | Frontend |
-| Willian Hiroshi da Silva Fukuda | Testes e CI |
+| Willian Hiroshi da Silva Fukuda | Backend e Banco / Testes e CI |
 
 Cada área tem um responsável, que garante a entrega e mantém os documentos dela atualizados. Todos podem contribuir em qualquer área.
 
