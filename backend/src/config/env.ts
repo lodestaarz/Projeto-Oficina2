@@ -1,5 +1,3 @@
-// Centraliza a leitura das variáveis de ambiente.
-// Em desenvolvimento, o arquivo .env é carregado pelo script "npm run dev".
 
 export const env = {
   nodeEnv: process.env.NODE_ENV ?? 'development',
