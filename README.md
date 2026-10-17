@@ -1,106 +1,76 @@
-# ArrowBot
+# Projeto Acadêmico da Disciplina Oficina De Integração 2 - Engenharia de Software - UTFPR-CP - 02/2026
 
-Projeto acadêmico da disciplina Oficina de Integração 2 (Engenharia de Software, UTFPR-CP, 2º semestre de 2026), relacionado ao projeto de extensão ELLP (Ensino Lúdico de Lógica e Programação).
+## Alunos
+>[Davi Felipe Zeneratto](https://github.com/davifz)
+>
+>[Gabriel Moya Amorim](https://github.com/gabrielAmorim-utfpr)
+>
+>[Gleisson Santos Vieira](https://github.com/gleisson-santos-dev)
+>
+>[Vinícius de Farias Santos](https://github.com/lodestaarz)
+>
+>[Willian Hiroshi da Silva Fukuda](https://github.com/fkdhiro)
 
-O ArrowBot é uma ferramenta web visual para ensinar conceitos básicos de lógica de programação. O usuário controla um personagem numa grade de 8 × 8 com comandos de direção (botões ou setas do teclado), monta sequências de comandos e as executa passo a passo. O acesso é feito com e-mail e senha ou com a conta Google.
+## Sobre o Projeto
 
-## Stack
+Este projeto faz parte da disciplina Oficina de Integração 2 e está relacionado ao projeto de extensão ELLP (Ensino Lúdico de Lógica e Programação).
 
-| Camada               | Tecnologias                                                                           |
-| -------------------- | ------------------------------------------------------------------------------------- |
-| Linguagem            | TypeScript 5.9 (modo `strict`) em todo o projeto, Node.js 22                          |
-| Frontend             | React 19, Vite 6, React Router 7, `@react-oauth/google`                               |
-| Backend              | Express 5, `zod`, `bcryptjs`, `jsonwebtoken`, `google-auth-library`, `helmet`, `cors` |
-| Banco de dados       | PostgreSQL 16 (Docker), acesso com `pg` (SQL parametrizado, sem ORM)                  |
-| Tipos compartilhados | Pacote `@arrowbot/shared` (npm workspaces)                                            |
-| Testes               | Vitest, Supertest, React Testing Library + jsdom, Playwright, `@vitest/coverage-v8`   |
-| Qualidade            | ESLint 9 + `typescript-eslint`, Prettier 3, GitHub Actions                            |
+A proposta consiste no desenvolvimento de uma ferramenta visual e interativa para o ensino de conceitos básicos de lógica de programação. Por meio da aplicação, o usuário poderá controlar um personagem em uma área delimitada utilizando comandos direcionais e organizar sequências de instruções para execução.
 
-Detalhes, versões e decisões em [docs/tecnologias.md](docs/tecnologias.md).
+O projeto busca proporcionar uma experiência simples e acessível, permitindo que o usuário compreenda conceitos como sequência de comandos, direção e movimentação de forma prática e visual.
 
-## Documentação
+# Requisitos
 
-| Documento                                            | Conteúdo                                                  |
-| ---------------------------------------------------- | --------------------------------------------------------- |
-| [Descrição do sistema](docs/descricao-do-sistema.md) | Proposta, objetivos, limites e usuários                   |
-| [Requisitos](requisitos/README.md)                   | Requisitos funcionais, não funcionais e regras de negócio |
-| [Arquitetura](docs/arquitetura-sistema.md)           | Camadas, contrato da API, autenticação e modelo de dados  |
-| [Stack e tecnologias](docs/tecnologias.md)           | Ferramentas, versões, scripts e decisões                  |
-| [Testes](docs/testes.md)                             | Estratégia de testes ([casos de teste e matriz](tests/))  |
-| [Processo e cronograma](docs/processo.md)            | Scrum, Kanban, branches, definição de pronto e datas      |
+Requisitos funcionais, não funcionais e regras de negócio da ferramenta Lógica Lúdica. Cada requisito funcional tem um arquivo próprio com descrição, critérios de aceite, prioridade, sprint e situação atual. Esses arquivos servem de base para as issues no GitHub.
 
-## Equipe
+A coluna **Situação** reflete o código da branch `main`. Atualize-a no mesmo pull request que implementar o requisito.
 
-| Pessoa                          | GitHub                                                         | Responsabilidade |
-| ------------------------------- | -------------------------------------------------------------- | ---------------- |
-| Davi Felipe Zeneratto           | [@davifz](https://github.com/davifz)                           | _(a definir)_    |
-| Gabriel Moya Amorim             | [@gabrielAmorim-utfpr](https://github.com/gabrielAmorim-utfpr) | _(a definir)_    |
-| Gleisson Santos Vieira          | [@gleisson-santos-dev](https://github.com/gleisson-santos-dev) | _(a definir)_    |
-| Vinícius de Farias Santos       | [@lodestaarz](https://github.com/lodestaarz)                   | _(a definir)_    |
-| Willian Hiroshi da Silva Fukuda | [@fkdhiro](https://github.com/fkdhiro)                         | _(a definir)_    |
+## Requisitos funcionais
 
-## Como rodar
+| Código | Requisito | Prioridade | Sprint | Situação |
+|---|---|---|---|---|
+| [RF01](RF01-cadastrar-conta.md) | Cadastrar conta com nome, e-mail e senha | Alta | Sprint 1 | Não iniciado |
+| [RF02](RF02-entrar-com-email-e-senha.md) | Entrar com e-mail e senha | Alta | Sprint 1 | Não iniciado |
+| [RF03](RF03-entrar-com-google.md) | Entrar com conta Google | Alta | Sprint 1 | Não iniciado |
+| [RF04](RF04-manter-e-encerrar-sessao.md) | Manter e encerrar a sessão | Alta | Sprint 1 | Não iniciado |
+| [RF05](RF05-visualizar-perfil.md) | Visualizar perfil | Média | Sprint 2 | Não iniciado |
+| [RF06](RF06-exibir-area-de-movimentacao.md) | Exibir a área de movimentação | Alta | Sprint 1 | Implementado |
+| [RF07](RF07-exibir-personagem.md) | Exibir o personagem e sua posição | Alta | Sprint 1 | Implementado |
+| [RF08](RF08-mover-com-botoes.md) | Mover o personagem com botões | Alta | Sprint 1 | Implementado |
+| [RF09](RF09-mover-com-teclado.md) | Mover o personagem com as setas do teclado | Alta | Sprint 1 | Implementado |
+| [RF10](RF10-respeitar-limites-da-area.md) | Respeitar os limites da área | Alta | Sprint 1 | Implementado |
+| [RF11](RF11-voltar-a-posicao-inicial.md) | Voltar à posição inicial | Alta | Sprint 1 | Não iniciado |
+| [RF12](RF12-executar-sequencia-de-comandos.md) | Executar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
+| [RF13](RF13-armazenar-dados-do-usuario.md) | Armazenar os dados do usuário | Alta | Sprint 1 | Parcial |
+| [RF14](RF14-montar-sequencia-de-comandos.md) | Montar a sequência de comandos | Alta | Sprint 2 | Não iniciado |
 
-Pré-requisitos: Node.js 22 (veja `.nvmrc`) e Docker. O projeto é escrito em **TypeScript**.
+## Requisitos não funcionais
 
-```bash
-# 1. Instalar as dependências do frontend e do backend
-npm install
+| Código | Descrição | Categoria |
+|---|---|---|
+| RNF01 | A interface deve usar linguagem simples e retorno visual imediato a cada comando, pensando no público iniciante das oficinas do ELLP. | Usabilidade |
+| RNF02 | Todos os controles devem poder ser usados pelo teclado e ter rótulos acessíveis (`aria-label`) para leitores de tela. | Acessibilidade |
+| RNF03 | A aplicação deve funcionar nas versões atuais de Chrome, Firefox, Edge e Safari e se adaptar a telas de notebook e tablet. | Compatibilidade |
+| RNF04 | A movimentação do personagem deve ser calculada no navegador, sem depender de resposta do servidor. | Desempenho |
+| RNF05 | Senhas devem ser guardadas apenas como hash (bcrypt). Segredos e credenciais ficam em variáveis de ambiente e nunca são versionados. | Segurança |
+| RNF06 | O sistema deve guardar apenas os dados necessários, e cada usuário só pode acessar os próprios dados. | Privacidade |
+| RNF07 | Frontend e backend devem seguir a separação em camadas descrita na arquitetura. As regras do jogo ficam em módulos puros, fora dos componentes. | Manutenibilidade |
+| RNF08 | Toda funcionalidade deve ter testes automatizados, e o CI deve rodar lint, testes e build a cada pull request. | Testabilidade |
 
-# 2. Criar os arquivos de ambiente e preencher os valores
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env.local
+## Regras de negócio
 
-# 3. Subir o banco de dados
-npm run db:up
+| Código | Regra | Requisitos relacionados |
+|---|---|---|
+| RN01 | A área de movimentação é uma grade de 8 colunas por 8 linhas. | RF06 |
+| RN02 | A posição inicial do personagem é a célula (0, 0), no canto superior esquerdo. O eixo x cresce para a direita e o eixo y cresce para baixo. | RF07, RF11 |
+| RN03 | Cada comando desloca o personagem exatamente uma célula na direção indicada: Cima, Baixo, Esquerda ou Direita. | RF08, RF09, RF12 |
+| RN04 | Um comando que levaria o personagem para fora da grade é ignorado, e o personagem permanece onde está. | RF10, RF12 |
+| RN05 | Os comandos de uma sequência são executados um por vez, na ordem em que aparecem. Um comando ignorado pela RN04 não interrompe a sequência. | RF12, RF14 |
+| RN06 | Cada e-mail corresponde a uma única conta. | RF01, RF03 |
+| RN07 | A senha deve ter no mínimo 8 caracteres. | RF01 |
+| RN08 | A sessão expira após 1 dia (`JWT_EXPIRES_IN=1d`). Depois disso, o usuário precisa entrar novamente. | RF04 |
+| RN09 | Um usuário só pode consultar e alterar os próprios dados. | RF05, RF13, RNF06 |
 
-# 4. Subir backend e frontend juntos
-npm run dev
-```
+## Rastreabilidade
 
-- Interface: http://localhost:5173
-- API: http://localhost:3001/api (teste com http://localhost:3001/api/health)
-
-Para desligar o banco: `npm run db:down`.
-
-> Se você já tinha subido o banco antes (quando ele se chamava `logica_ludica` e ainda não existia o `database/init.sql`), o banco `arrowbot` e a tabela `usuarios` não existem no volume antigo. Recrie o volume uma vez com `docker compose down -v && npm run db:up` (isso apaga os dados locais).
-
-### Login com Google
-
-Crie um Client ID OAuth do tipo "Aplicativo da Web" no Google Cloud Console (APIs e serviços → Credenciais), adicione `http://localhost:5173` às origens JavaScript autorizadas e coloque o mesmo valor em `GOOGLE_CLIENT_ID` (backend) e `VITE_GOOGLE_CLIENT_ID` (frontend).
-
-## Comandos úteis
-
-| Comando                               | O que faz                                                                 |
-| ------------------------------------- | ------------------------------------------------------------------------- |
-| `npm run dev`                         | Sobe backend e frontend em modo de desenvolvimento                        |
-| `npm run typecheck`                   | Checa os tipos (TypeScript) de todos os pacotes                           |
-| `npm test`                            | Roda os testes do frontend e do backend (sem precisar de banco)           |
-| `npm run test:coverage`               | Testes com relatório de cobertura                                         |
-| `npm run test:integration -w backend` | Testes com PostgreSQL de verdade (exige `TEST_DATABASE_URL`)              |
-| `npm run test:e2e`                    | Testes de ponta a ponta no navegador (Playwright; exige o banco no ar)    |
-| `npm run lint`                        | Roda o ESLint nos dois projetos                                           |
-| `npm run format`                      | Formata o código com Prettier                                             |
-| `npm run build`                       | Compila o backend (`backend/dist`) e gera o build de produção do frontend |
-
-O CI (GitHub Actions) roda formatação, tipos, lint, testes e build a cada push na `main` e a cada pull request, além dos testes de integração com o banco e dos E2E em jobs separados.
-
-## Estrutura
-
-```
-shared/      Tipos compartilhados (Direcao, Posicao, Usuario...) — só TypeScript, sem código
-frontend/    React + Vite (páginas, componentes, regras puras do jogo em src/game)
-backend/     Express (rotas → controllers → services → repositories)
-database/    init.sql, executado na primeira subida do PostgreSQL
-tests/e2e/   Testes de ponta a ponta (Playwright)
-```
-
-## Cronograma
-
-| Etapa      | Período       |
-| ---------- | ------------- |
-| Preparação | 29/09 a 16/10 |
-| Sprint 1   | 17/10 a 07/11 |
-| Sprint 2   | 08/11 a 30/11 |
-
-Detalhes de cada etapa em [`docs/processo.md`](docs/processo.md).
+A ligação entre requisitos e casos de teste está em [`tests/matriz-rastreabilidade.md`](../tests/matriz-rastreabilidade.md).
