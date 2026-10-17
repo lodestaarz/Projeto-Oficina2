@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { CHAVE_SESSAO } from './services/sessao';
 import {
-  USUARIO_ANA,
+  USUARIO_TESTE,
   renderizarApp,
   respostaJson,
   salvarSessaoDeTeste,
