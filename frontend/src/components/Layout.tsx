@@ -2,7 +2,6 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Logo } from './Logo';
 
-/** Cabeçalho das páginas internas, com navegação e o botão Sair (RF04). */
 export function Layout() {
   const { usuario, sair } = useAuth();
   const navigate = useNavigate();
