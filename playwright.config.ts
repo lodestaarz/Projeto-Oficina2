@@ -1,8 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Testes de ponta a ponta (tests/e2e). Sobem a API e o frontend de verdade.
-// Pré-requisito: um PostgreSQL com database/init.sql aplicado, apontado por
-// E2E_DATABASE_URL (padrão: o banco do docker-compose).
 const databaseUrl = process.env.E2E_DATABASE_URL ?? 'postgres://app:app@localhost:5432/arrowbot';
 
 export default defineConfig({
@@ -16,7 +13,6 @@ export default defineConfig({
     locale: 'pt-BR',
     trace: 'on-first-retry',
   },
-  // RNF03: Chrome/Edge (Chromium), Firefox e Safari (WebKit), em notebook e tablet.
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },

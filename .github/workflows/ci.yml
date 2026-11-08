@@ -24,9 +24,11 @@ jobs:
         # Troque por "npm ci" assim que o package-lock.json estiver no repositório
         run: npm install
 
-      # Depois de rodar "npm run format" uma vez e commitar, ative a checagem:
-      # - name: Verificar formatação
-      #   run: npm run format:check
+      - name: Verificar formatação
+        run: npm run format:check
+
+      - name: Checagem de tipos (TypeScript)
+        run: npm run typecheck
 
       - name: Lint
         run: npm run lint
@@ -34,5 +36,78 @@ jobs:
       - name: Testes
         run: npm test
 
-      - name: Build do frontend
+      - name: Build
         run: npm run build
+
+  integracao-banco:
+    runs-on: ubuntu-latest
+    needs: lint-test-build
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: arrowbot_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U app -d arrowbot_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      TEST_DATABASE_URL: postgres://app:app@localhost:5432/arrowbot_test
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm install
+      - name: Testes de integração com o banco
+        run: npm run test:integration -w backend
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: lint-test-build
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: arrowbot_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U app -d arrowbot_e2e"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      E2E_DATABASE_URL: postgres://app:app@localhost:5432/arrowbot_e2e
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm install
+      - name: Criar as tabelas
+        run: psql "$E2E_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/init.sql
+      - name: Instalar navegadores do Playwright
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Testes de ponta a ponta
+        run: npm run test:e2e
+      - name: Guardar relatório do Playwright
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

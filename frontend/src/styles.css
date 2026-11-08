@@ -1,83 +1,149 @@
+/* ===== Tokens ===== */
 :root {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  color: #1f2430;
-  background: #f4f6fb;
+  --cor-fundo: #f4f6fb;
+  --cor-superficie: #ffffff;
+  --cor-superficie-2: #eef1f8;
+  --cor-texto: #1f2430;
+  --cor-texto-suave: #5c6475;
+  --cor-borda: #d5dbe8;
+  --cor-primaria: #3b5bdb;
+  --cor-primaria-forte: #2f4ac0;
+  --cor-primaria-suave: #e3e9ff;
+  --cor-personagem: #ff7a45;
+  --cor-personagem-escura: #d9572a;
+  --cor-celula: #e8ecf5;
+  --cor-rastro: #ffe3d4;
+  --cor-sucesso: #2b8a3e;
+  --cor-perigo: #c92a2a;
+  --cor-perigo-suave: #fff0f0;
+  --cor-foco: #f59f00;
+  --raio: 12px;
+  --sombra: 0 1px 2px rgb(31 36 48 / 6%), 0 6px 20px rgb(31 36 48 / 6%);
+
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  line-height: 1.45;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-fundo: #14171f;
+    --cor-superficie: #1d212b;
+    --cor-superficie-2: #252a36;
+    --cor-texto: #e8ebf2;
+    --cor-texto-suave: #a3abbd;
+    --cor-borda: #343b4b;
+    --cor-primaria: #6f8cff;
+    --cor-primaria-forte: #8aa1ff;
+    --cor-primaria-suave: #26304f;
+    --cor-celula: #2a3040;
+    --cor-rastro: #4a3226;
+    --cor-perigo: #ff8787;
+    --cor-perigo-suave: #3b2226;
+    --sombra: 0 1px 2px rgb(0 0 0 / 30%), 0 6px 20px rgb(0 0 0 / 25%);
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  background: var(--cor-fundo);
 }
 
-.app {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 32px 16px;
-  text-align: center;
+/* ===== Estrutura das páginas internas ===== */
+.pular-conteudo {
+  position: absolute;
+  left: -9999px;
 }
 
-.board {
-  display: grid;
+.pular-conteudo:focus {
+  left: 16px;
+  top: 8px;
+  z-index: 10;
+  padding: 8px 12px;
+  background: var(--cor-superficie);
+  border-radius: 8px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--cor-texto);
+}
+
+.cabecalho-nav {
+  display: flex;
   gap: 4px;
-  padding: 8px;
-  border: 3px solid #1f2430;
-  border-radius: 12px;
-  background: #ffffff;
-  aspect-ratio: 1;
+  margin-left: 16px;
 }
 
-.cell {
-  display: grid;
-  place-items: center;
-  border-radius: 6px;
-  background: #e8ecf5;
+.cabecalho-nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.character {
-  width: 70%;
-  height: 70%;
-  border-radius: 50%;
-  background: #ff7a45;
-  transition: transform 0.1s ease-out;
+.cabecalho-nav a:hover {
+  color: var(--cor-texto);
 }
 
-.controls {
-  display: grid;
-  grid-template-columns: repeat(3, 56px);
-  grid-template-areas:
-    '. up .'
-    'left down right';
-  gap: 8px;
-  justify-content: center;
-  margin-top: 24px;
+.cabecalho-nav a.active {
+  background: var(--cor-primaria-suave);
+  color: var(--cor-primaria);
 }
 
-.control {
-  height: 56px;
-  font-size: 24px;
-  border: none;
-  border-radius: 12px;
-  background: #3b5bdb;
-  color: #ffffff;
-  cursor: pointer;
+.cabecalho-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
 }
 
-.control:hover {
-  background: #2f4ac0;
+.cabecalho-nome {
+  color: var(--cor-texto-suave);
 }
 
-.control-up {
-  grid-area: up;
-}
-.control-left {
-  grid-area: left;
-}
-.control-down {
-  grid-area: down;
-}
-.control-right {
-  grid-area: right;
+.conteudo {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
 }
 
-.position {
-  color: #5c6475;
+.titulo-pagina {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.carregando {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--cor-texto-suave);
 }
