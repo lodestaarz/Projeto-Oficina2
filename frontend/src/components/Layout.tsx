@@ -1,10 +1,13 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { Logo } from './Logo';
 
 export function Layout() {
+  const { usuario, sair } = useAuth();
   const navigate = useNavigate();
 
   function aoSair() {
+    sair();
     navigate('/login', { replace: true });
   }
 
@@ -22,6 +25,7 @@ export function Layout() {
           <NavLink to="/perfil">Perfil</NavLink>
         </nav>
         <div className="cabecalho-usuario">
+          {usuario && <span className="cabecalho-nome">Olá, {usuario.nome.split(' ')[0]}!</span>}
           <button type="button" className="botao botao--fantasma" onClick={aoSair}>
             Sair
           </button>
