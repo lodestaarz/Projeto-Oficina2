@@ -721,3 +721,19 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (max-width: 640px) {
+  .cabecalho {
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    gap: 8px;
+  }
+
+  .cabecalho-nav {
+    margin-left: 0;
+  }
+
+  .cabecalho-nome {
+    display: none;
+  }
+}
