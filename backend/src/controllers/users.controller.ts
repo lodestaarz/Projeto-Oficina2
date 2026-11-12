@@ -4,7 +4,14 @@ import type { RequisicaoAutenticada } from '../middlewares/autenticar.js';
 import { esquemaCadastro, esquemaLogin } from '../schemas/auth.schema.js';
 import * as auth from '../services/auth.service.js';
 
-function validar<T>(esquema: { safeParse: (v: unknown) => { success: true; data: T } | { success: false; error: { issues: { message: string }[] } } }, corpo: unknown): T {
+function validar<T>(
+  esquema: {
+    safeParse: (
+      v: unknown,
+    ) => { success: true; data: T } | { success: false; error: { issues: { message: string }[] } };
+  },
+  corpo: unknown,
+): T {
   const r = esquema.safeParse(corpo ?? {});
   if (!r.success) throw new HttpError(400, r.error.issues[0]?.message ?? MENSAGENS.corpoInvalido);
   return r.data;

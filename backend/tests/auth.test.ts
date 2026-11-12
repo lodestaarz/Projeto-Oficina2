@@ -62,7 +62,12 @@ describe('POST /api/auth/register', () => {
       .send({ nome: ' Ana Lima ', email: 'ANA@ex.com', senha: 'segredo123' });
     expect(r.status).toBe(201);
     expect(r.body.token).toEqual(expect.any(String));
-    expect(r.body.usuario).toEqual({ id: ANA.id, nome: 'Ana Lima', email: 'ana@ex.com', provedores: ['senha'] });
+    expect(r.body.usuario).toEqual({
+      id: ANA.id,
+      nome: 'Ana Lima',
+      email: 'ana@ex.com',
+      provedores: ['senha'],
+    });
     expect(JSON.stringify(r.body)).not.toContain('senha_hash');
     const [nome, email, hash] = vi.mocked(repo.criarComSenha).mock.calls[0]!;
     expect([nome, email]).toEqual(['Ana Lima', 'ana@ex.com']);
@@ -93,15 +98,21 @@ describe('POST /api/auth/register', () => {
 describe('POST /api/auth/login', () => {
   it('entra com credenciais corretas', async () => {
     vi.mocked(repo.buscarPorEmail).mockResolvedValue(ANA);
-    const r = await request(app).post('/api/auth/login').send({ email: 'ana@ex.com', senha: 'segredo123' });
+    const r = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'ana@ex.com', senha: 'segredo123' });
     expect(r.status).toBe(200);
     expect(r.body.usuario.email).toBe('ana@ex.com');
   });
 
   it('rejeita senha errada e e-mail inexistente com a mesma mensagem', async () => {
     vi.mocked(repo.buscarPorEmail).mockResolvedValueOnce(ANA).mockResolvedValueOnce(null);
-    const errada = await request(app).post('/api/auth/login').send({ email: 'ana@ex.com', senha: 'outra-senha' });
-    const inexistente = await request(app).post('/api/auth/login').send({ email: 'x@ex.com', senha: 'segredo123' });
+    const errada = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'ana@ex.com', senha: 'outra-senha' });
+    const inexistente = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'x@ex.com', senha: 'segredo123' });
     expect(errada.status).toBe(401);
     expect(inexistente.status).toBe(401);
     expect(errada.body).toEqual(inexistente.body);
@@ -109,7 +120,9 @@ describe('POST /api/auth/login', () => {
 
   it('rejeita conta sem senha (só Google)', async () => {
     vi.mocked(repo.buscarPorEmail).mockResolvedValue({ ...ANA, senha_hash: null, google_id: 'g1' });
-    const r = await request(app).post('/api/auth/login').send({ email: 'ana@ex.com', senha: 'segredo123' });
+    const r = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'ana@ex.com', senha: 'segredo123' });
     expect(r.status).toBe(401);
   });
 });
