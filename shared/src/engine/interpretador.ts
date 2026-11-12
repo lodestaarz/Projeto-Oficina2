@@ -1,3 +1,4 @@
+import { NOMES_FUNCAO } from './tipos.ts';
 import type {
   Bloco,
   Condicao,
@@ -11,6 +12,8 @@ import type {
 } from './tipos.ts';
 
 export const LIMITE_PASSOS = 500;
+/** Profundidade máxima de chamadas de função aninhadas (evita recursão infinita). */
+export const LIMITE_CHAMADAS = 20;
 
 const DELTAS: Record<Direcao, { dx: number; dy: number }> = {
   0: { dx: 0, dy: -1 },
@@ -26,7 +29,8 @@ export function celula(fase: Fase, x: number, y: number): string {
 
 export function contarBlocos(programa: Programa): number {
   return programa.reduce((total, b) => {
-    if (b.tipo === 'repetir' || b.tipo === 'enquanto') return total + 1 + contarBlocos(b.corpo);
+    if (b.tipo === 'repetir' || b.tipo === 'enquanto' || b.tipo === 'funcao')
+      return total + 1 + contarBlocos(b.corpo);
     if (b.tipo === 'se') return total + 1 + contarBlocos(b.entao) + contarBlocos(b.senao);
     return total + 1;
   }, 0);
@@ -47,6 +51,10 @@ export function executar(fase: Fase, programa: Programa): Resultado {
   let contador = 0;
   const coletados = new Set<string>();
   const passos: Passo[] = [];
+  // Funções são içadas: podem ser chamadas antes da definição.
+  const funcoes = new Map<string, Bloco[]>();
+  for (const b of programa) if (b.tipo === 'funcao') funcoes.set(b.nome, b.corpo);
+  let profundidade = 0;
 
   const registrar = (blocoId: string, erro?: ErroExecucao): void => {
     if (passos.length >= LIMITE_PASSOS) {
@@ -152,6 +160,30 @@ export function executar(fase: Fase, programa: Programa): Resultado {
           if (venceu()) throw new ParadaDeExecucao(null);
           break;
         }
+        case 'funcao':
+          break; // só define; não gasta passo
+        case 'chamar': {
+          registrar(bloco.id);
+          const corpo = funcoes.get(bloco.nome);
+          if (!corpo) {
+            throw new ParadaDeExecucao({
+              codigo: 'funcaoInvalida',
+              mensagem: `A função ${bloco.nome} não foi definida.`,
+              dica: 'Defina a função com o bloco "função" antes de chamá-la.',
+            });
+          }
+          if (profundidade >= LIMITE_CHAMADAS) {
+            throw new ParadaDeExecucao({
+              codigo: 'funcaoInvalida',
+              mensagem: 'Chamadas de função demais, uma dentro da outra.',
+              dica: 'Uma função não deve chamar a si mesma sem parar.',
+            });
+          }
+          profundidade++;
+          rodar(corpo);
+          profundidade--;
+          break;
+        }
         case 'definir':
           contador = bloco.valor;
           registrar(bloco.id);
@@ -233,6 +265,8 @@ export function calcularEstrelas(
 /** Programa é permitido na fase? (blocos e sensores liberados) */
 export function validarPrograma(fase: Fase, programa: Programa): string | null {
   const ids = new Set<string>();
+  const nomes = new Set<string>();
+  const topo = new Set<Bloco>(programa);
   const visitar = (blocos: Bloco[]): string | null => {
     for (const b of blocos) {
       if (ids.has(b.id)) return `Bloco com id repetido: ${b.id}`;
@@ -248,8 +282,15 @@ export function validarPrograma(fase: Fase, programa: Programa): string | null {
           return `Sensor não permitido nesta fase: ${c.sensor}`;
         }
       }
+      if (b.tipo === 'funcao') {
+        if (!topo.has(b)) return 'Função só pode ser definida no nível principal';
+        if (nomes.has(b.nome)) return `Função repetida: ${b.nome}`;
+        nomes.add(b.nome);
+      }
+      if ((b.tipo === 'funcao' || b.tipo === 'chamar') && !NOMES_FUNCAO.includes(b.nome))
+        return `Nome de função inválido: ${String(b.nome)}`;
       const filhos =
-        b.tipo === 'repetir' || b.tipo === 'enquanto'
+        b.tipo === 'repetir' || b.tipo === 'enquanto' || b.tipo === 'funcao'
           ? [b.corpo]
           : b.tipo === 'se'
             ? [b.entao, b.senao]

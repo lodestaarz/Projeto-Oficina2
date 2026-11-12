@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { NOMES_FUNCAO } from '@arrowbot/shared/engine';
 import type { Bloco } from '@arrowbot/shared/engine';
 
 const MAX_PROFUNDIDADE = 8;
@@ -35,6 +36,8 @@ function bloco(nivel: number): z.ZodType<Bloco> {
     z
       .object({ id, tipo: z.literal('repetir'), vezes: z.number().int().min(1).max(99), corpo })
       .strict(),
+    z.object({ id, tipo: z.literal('funcao'), nome: z.enum(NOMES_FUNCAO), corpo }).strict(),
+    z.object({ id, tipo: z.literal('chamar'), nome: z.enum(NOMES_FUNCAO) }).strict(),
     z.object({ id, tipo: z.literal('definir'), valor: valorNumerico }).strict(),
     z.object({ id, tipo: z.literal('somar'), valor: valorNumerico }).strict(),
     z.object({ id, tipo: z.literal('enquanto'), condicao, corpo }).strict(),

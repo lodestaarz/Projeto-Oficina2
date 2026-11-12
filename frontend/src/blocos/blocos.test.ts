@@ -135,4 +135,30 @@ describe('gerarCodigo', () => {
     expect(gerarCodigo(prog, 'js')).toBe('contador = 0;\nwhile (itens < 3) {\n  contador += 1;\n}');
     expect(gerarCodigo(prog, 'python')).toBe('contador = 0\nwhile itens < 3:\n  contador += 1');
   });
+
+  it('converte funções soltas e chamadas e gera código JS/Python', () => {
+    const prog = estadoParaPrograma({
+      blocks: {
+        blocks: [
+          {
+            type: 'arrow_inicio',
+            id: 'ini',
+            next: { block: { type: 'arrow_chamar', id: 'c', fields: { NOME: 'A' } } },
+          },
+          {
+            type: 'arrow_funcao',
+            id: 'f',
+            fields: { NOME: 'A' },
+            inputs: { CORPO: { block: { type: 'arrow_avancar', id: 'a' } } },
+          },
+        ],
+      },
+    });
+    expect(prog).toEqual([
+      { id: 'f', tipo: 'funcao', nome: 'A', corpo: [{ id: 'a', tipo: 'avancar' }] },
+      { id: 'c', tipo: 'chamar', nome: 'A' },
+    ]);
+    expect(gerarCodigo(prog, 'js')).toBe('function A() {\n  avancar();\n}\nA();');
+    expect(gerarCodigo(prog, 'python')).toBe('def A():\n  avancar()\nA()');
+  });
 });

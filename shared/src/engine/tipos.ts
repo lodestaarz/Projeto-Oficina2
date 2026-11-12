@@ -5,6 +5,10 @@ export type Direcao = 0 | 1 | 2 | 3;
 
 export type Sensor = 'obstaculoAFrente' | 'buracoAFrente' | 'caminhoLivre' | 'metaAFrente';
 
+/** Funções disponíveis (nomes fixos para o aluno escolher em uma lista). */
+export const NOMES_FUNCAO = ['A', 'B', 'C'] as const;
+export type NomeFuncao = (typeof NOMES_FUNCAO)[number];
+
 export type Variavel = 'contador' | 'itens';
 export type OperadorComparacao = '<' | '=' | '>';
 
@@ -27,6 +31,8 @@ export type Bloco =
   | { id: string; tipo: 'girar'; lado: 'esquerda' | 'direita' }
   | { id: string; tipo: 'definir'; valor: number }
   | { id: string; tipo: 'somar'; valor: number }
+  | { id: string; tipo: 'funcao'; nome: NomeFuncao; corpo: Bloco[] }
+  | { id: string; tipo: 'chamar'; nome: NomeFuncao }
   | { id: string; tipo: 'repetir'; vezes: number; corpo: Bloco[] }
   | { id: string; tipo: 'enquanto'; condicao: Condicao; corpo: Bloco[] }
   | { id: string; tipo: 'se'; condicao: Condicao; entao: Bloco[]; senao: Bloco[] };
@@ -63,7 +69,8 @@ export interface Robo {
   dir: Direcao;
 }
 
-export type CodigoErro = 'parede' | 'buraco' | 'porta' | 'limite' | 'repetirInvalido';
+export type CodigoErro =
+  'parede' | 'buraco' | 'porta' | 'limite' | 'repetirInvalido' | 'funcaoInvalida';
 
 export interface ErroExecucao {
   codigo: CodigoErro;

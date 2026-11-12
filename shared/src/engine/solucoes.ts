@@ -8,6 +8,9 @@ const gd = (): Bloco => ({ id: id(), tipo: 'girar', lado: 'direita' });
 const ge = (): Bloco => ({ id: id(), tipo: 'girar', lado: 'esquerda' });
 const rep = (vezes: number, corpo: Bloco[]): Bloco => ({ id: id(), tipo: 'repetir', vezes, corpo });
 
+const fn = (corpo: Bloco[]): Bloco => ({ id: id(), tipo: 'funcao', nome: 'A', corpo });
+const ch = (): Bloco => ({ id: id(), tipo: 'chamar', nome: 'A' });
+
 export function solucaoDaFase(fase: number): Programa {
   switch (fase) {
     case 1:
@@ -128,6 +131,23 @@ export function solucaoDaFase(fase: number): Programa {
           ],
         },
         { id: id(), tipo: 'enquanto', condicao: { sensor: 'caminhoLivre' }, corpo: [av()] },
+      ];
+    case 16:
+      return [fn([av(), gd(), av(), ge()]), ch(), ch(), ch()];
+    case 17:
+      return [fn([rep(2, [av()]), gd()]), rep(3, [ch()]), av()];
+    case 18:
+      return [
+        fn([
+          {
+            id: id(),
+            tipo: 'se',
+            condicao: { sensor: 'obstaculoAFrente' },
+            entao: [gd()],
+            senao: [av()],
+          },
+        ]),
+        rep(10, [ch()]),
       ];
     default:
       return [];

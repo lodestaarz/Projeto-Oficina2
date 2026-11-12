@@ -1,4 +1,12 @@
-import type { Bloco, Condicao, Programa, Sensor, Variavel } from '@arrowbot/shared/engine';
+import { NOMES_FUNCAO } from '@arrowbot/shared/engine';
+import type {
+  Bloco,
+  NomeFuncao,
+  Condicao,
+  Programa,
+  Sensor,
+  Variavel,
+} from '@arrowbot/shared/engine';
 
 /** Subconjunto do JSON de `Blockly.serialization.workspaces.save` que o ArrowBot usa. */
 export interface BlocoSerializado {
@@ -36,6 +44,10 @@ export function lerCondicao(valor: unknown, limite?: unknown): Condicao {
   return { sensor: SENSORES.includes(sensor) ? sensor : 'obstaculoAFrente', negado };
 }
 
+function lerNome(v: unknown): NomeFuncao {
+  return NOMES_FUNCAO.find((n) => n === v) ?? 'A';
+}
+
 function cadeia(inicio: BlocoSerializado | undefined): Bloco[] {
   const lista: Bloco[] = [];
   for (let b = inicio; b; b = b.next?.block) {
@@ -56,6 +68,10 @@ function converterBloco(b: BlocoSerializado): Bloco | null {
       return { id, tipo: 'girar', lado: campo('LADO') === 'esquerda' ? 'esquerda' : 'direita' };
     case 'arrow_repetir':
       return { id, tipo: 'repetir', vezes: Number(campo('VEZES')), corpo: entrada('CORPO') };
+    case 'arrow_funcao':
+      return { id, tipo: 'funcao', nome: lerNome(campo('NOME')), corpo: entrada('CORPO') };
+    case 'arrow_chamar':
+      return { id, tipo: 'chamar', nome: lerNome(campo('NOME')) };
     case 'arrow_definir':
       return { id, tipo: 'definir', valor: Number(campo('VALOR')) || 0 };
     case 'arrow_somar':
@@ -86,7 +102,10 @@ function converterBloco(b: BlocoSerializado): Bloco | null {
  */
 export function estadoParaPrograma(estado: EstadoOficina): Programa {
   const topo = estado.blocks?.blocks ?? [];
-  const raiz = topo.find((b) => b.type === 'arrow_inicio');
-  if (raiz) return cadeia(raiz.next?.block);
-  return cadeia(topo[0]);
+  // Funções soltas no espaço entram antes do programa principal.
+  const funcoes = topo.filter((b) => b.type === 'arrow_funcao');
+  const principais = topo.filter((b) => b.type !== 'arrow_funcao');
+  const raiz = principais.find((b) => b.type === 'arrow_inicio');
+  const principal = raiz ? cadeia(raiz.next?.block) : cadeia(principais[0]);
+  return [...funcoes.flatMap((f) => converterBloco(f) ?? []), ...principal];
 }

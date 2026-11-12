@@ -40,6 +40,20 @@ function linhas(blocos: Bloco[], lang: Linguagem, nivel: number): string[] {
         saida.push(lang === 'js' ? `${rec}${fn}();` : `${rec}${fnPy}()`);
         break;
       }
+      case 'funcao':
+        if (lang === 'js') {
+          saida.push(
+            `${rec}function ${b.nome}() {`,
+            ...linhas(b.corpo, lang, nivel + 1),
+            `${rec}}`,
+          );
+        } else {
+          saida.push(`${rec}def ${b.nome}():`, ...corpoPy(b.corpo, nivel + 1));
+        }
+        break;
+      case 'chamar':
+        saida.push(lang === 'js' ? `${rec}${b.nome}();` : `${rec}${b.nome}()`);
+        break;
       case 'definir':
         saida.push(`${rec}contador = ${b.valor}${lang === 'js' ? ';' : ''}`);
         break;

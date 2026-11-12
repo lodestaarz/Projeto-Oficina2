@@ -127,3 +127,53 @@ describe('estrelas e validação', () => {
     ).toMatch(/repetido/);
   });
 });
+
+describe('funções', () => {
+  const f = fase(16);
+  const def = (corpo: Programa): Programa[number] => ({
+    id: 'fn',
+    tipo: 'funcao',
+    nome: 'A',
+    corpo,
+  });
+
+  it('chamar sem definir dá erro funcaoInvalida', () => {
+    const r = executar(f, [{ id: 'c', tipo: 'chamar', nome: 'A' }]);
+    expect(r.status).toBe('erro');
+    expect(r.erro?.codigo).toBe('funcaoInvalida');
+  });
+
+  it('função pode ser chamada antes de definida (içamento)', () => {
+    const r = executar(f, [
+      { id: 'c', tipo: 'chamar', nome: 'A' },
+      def([{ id: 'a', tipo: 'avancar' }]),
+    ]);
+    expect(r.passos.at(-1)?.robo).toMatchObject({ x: 1, y: 0 });
+  });
+
+  it('recursão infinita para com erro, sem estourar a pilha', () => {
+    const r = executar(f, [
+      def([{ id: 'c', tipo: 'chamar', nome: 'A' }]),
+      { id: 'x', tipo: 'chamar', nome: 'A' },
+    ]);
+    expect(r.status).toBe('erro');
+    expect(r.erro?.codigo).toBe('funcaoInvalida');
+  });
+
+  it('valida função aninhada, repetida e nome inválido', () => {
+    const f17 = fase(17);
+    expect(
+      validarPrograma(f17, [{ id: 'r', tipo: 'repetir', vezes: 2, corpo: [def([])] }]),
+    ).toMatch(/nível principal/);
+    expect(
+      validarPrograma(f, [def([]), { id: 'fn2', tipo: 'funcao', nome: 'A', corpo: [] }]),
+    ).toMatch(/repetida/);
+    expect(validarPrograma(f, [{ id: 'c', tipo: 'chamar', nome: 'Z' as 'A' }])).toMatch(/inválido/);
+  });
+
+  it('contarBlocos soma a função e seu corpo', () => {
+    expect(
+      contarBlocos([def([{ id: 'a', tipo: 'avancar' }]), { id: 'c', tipo: 'chamar', nome: 'A' }]),
+    ).toBe(3);
+  });
+});

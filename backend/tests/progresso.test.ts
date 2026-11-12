@@ -69,7 +69,7 @@ describe('progresso', () => {
     expect(vi.mocked(repo.salvarMelhor).mock.calls[0]?.[0]).toBe(USUARIO);
   });
 
-  it.each([13, 14, 15])('aceita a solução com variáveis/itens da fase %i', async (fase) => {
+  it.each([13, 14, 15, 16, 17, 18])('aceita a solução de referência da fase %i', async (fase) => {
     vi.mocked(repo.salvarMelhor).mockImplementation(async (_u, faseId, estrelas, blocos) => ({
       fase_id: faseId,
       estrelas,
@@ -83,6 +83,14 @@ describe('progresso', () => {
       .send({ programa: solucaoDaFase(fase), dicasUsadas: 0 });
     expect(r.status).toBe(200);
     expect(r.body.estrelas).toBe(3);
+  });
+
+  it('recusa função com nome desconhecido (400)', async () => {
+    const r = await request(app)
+      .put('/api/progresso/16')
+      .set(auth)
+      .send({ programa: [{ id: 'a', tipo: 'chamar', nome: 'Z' }] });
+    expect(r.status).toBe(400);
   });
 
   it('recusa comparação com variável desconhecida (400)', async () => {
