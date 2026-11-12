@@ -4,6 +4,21 @@ Projeto acadêmico da disciplina Oficina de Integração 2 (Engenharia de Softwa
 
 O ArrowBot é uma ferramenta web visual para ensinar conceitos básicos de lógica de programação. O usuário controla um personagem numa grade de 8 × 8 com comandos de direção (botões ou setas do teclado), monta sequências de comandos e as executa passo a passo. O acesso é feito com e-mail e senha ou com a conta Google.
 
+## O jogo
+
+Em `/fases` o usuário monta programas com blocos (Blockly) e vê o código equivalente em JavaScript e Python. São 18 fases, cada uma com 3 dicas e nota de 1 a 3 estrelas:
+
+| Fases | Conceito                        |
+| ----- | ------------------------------- |
+| 1–3   | Sequência                       |
+| 4–6   | Repetição (`repetir`)           |
+| 7–8   | Condição (`se` / `senão`)       |
+| 9–12  | Laço `enquanto`                 |
+| 13–15 | Variáveis (`contador`, `itens`) |
+| 16–18 | Funções (`A`, `B`, `C`)         |
+
+O motor que executa os programas fica em `shared/src/engine` e é usado pelo frontend e pelo backend. A nota nunca vem do cliente: o servidor reexecuta o programa e recalcula as estrelas antes de salvar o progresso. O treino livre (grade 8 × 8 com botões e setas) continua em `/treino`.
+
 ## Stack
 
 | Camada               | Tecnologias                                                                           |
