@@ -15,7 +15,12 @@ export function criarRotas(opcoes: OpcoesRotas = {}) {
     res.json({ status: 'ok' });
   });
   // Freia força bruta de senha: 10 tentativas por IP a cada 15 minutos.
-  const limite = limiteTentativas(opcoes.limiteLogin ?? { maximo: 10, janelaMs: 15 * 60 * 1000 });
+  const limite = limiteTentativas(
+    opcoes.limiteLogin ?? {
+      maximo: Number(process.env.LIMITE_LOGIN_MAXIMO) || 10,
+      janelaMs: 15 * 60 * 1000,
+    },
+  );
   rotas.post('/auth/register', limite, users.cadastrar);
   rotas.post('/auth/login', limite, users.entrar);
   rotas.post('/auth/google', limite, users.google);
