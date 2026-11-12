@@ -16,6 +16,7 @@ export const MENSAGENS = {
   googleNaoConfigurado: 'Login com Google não está configurado no servidor',
   tokenAusente: 'Sessão não informada',
   sessaoInvalida: 'Sessão inválida ou expirada',
+  muitasTentativas: 'Muitas tentativas. Aguarde alguns minutos e tente de novo',
   rotaNaoEncontrada: 'Rota não encontrada',
   corpoInvalido: 'Corpo da requisição inválido',
   erroInterno: 'Erro interno do servidor',

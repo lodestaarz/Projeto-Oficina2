@@ -21,8 +21,9 @@ function carregarEnv() {
 
   const dados = resultado.data;
 
-  if (dados.NODE_ENV === 'production' && dados.JWT_SECRET === 'troque-este-valor') {
-    throw new Error('Defina um JWT_SECRET próprio antes de rodar em produção.');
+  const padrao = dados.JWT_SECRET === 'troque-este-valor';
+  if (dados.NODE_ENV === 'production' && (padrao || dados.JWT_SECRET.length < 32)) {
+    throw new Error('JWT_SECRET fraco: use um valor aleatório de pelo menos 32 caracteres.');
   }
 
   return {

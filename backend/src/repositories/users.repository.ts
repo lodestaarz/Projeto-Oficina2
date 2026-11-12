@@ -38,3 +38,26 @@ export async function criarComSenha(nome: string, email: string, senhaHash: stri
 export function emailDuplicado(erro: unknown): boolean {
   return (erro as { code?: string } | null)?.code === '23505';
 }
+
+export async function buscarPorGoogleId(googleId: string): Promise<UsuarioRegistro | null> {
+  const r = await pool.query<UsuarioRegistro>('SELECT * FROM usuarios WHERE google_id = $1', [
+    googleId,
+  ]);
+  return r.rows[0] ?? null;
+}
+
+export async function vincularGoogle(id: string, googleId: string) {
+  const r = await pool.query<UsuarioRegistro>(
+    'UPDATE usuarios SET google_id = $2 WHERE id = $1 RETURNING *',
+    [id, googleId],
+  );
+  return r.rows[0]!;
+}
+
+export async function criarComGoogle(nome: string, email: string, googleId: string) {
+  const r = await pool.query<UsuarioRegistro>(
+    'INSERT INTO usuarios (nome, email, google_id) VALUES ($1, $2, $3) RETURNING *',
+    [nome, email, googleId],
+  );
+  return r.rows[0]!;
+}

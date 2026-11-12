@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { HttpError, MENSAGENS } from '../errors/HttpError.js';
 import type { RequisicaoAutenticada } from '../middlewares/autenticar.js';
-import { esquemaCadastro, esquemaLogin } from '../schemas/auth.schema.js';
+import { esquemaCadastro, esquemaGoogle, esquemaLogin } from '../schemas/auth.schema.js';
 import * as auth from '../services/auth.service.js';
 
 function validar<T>(
@@ -27,9 +27,9 @@ export function criarUsersController() {
       const { email, senha } = validar(esquemaLogin, req.body);
       res.json(await auth.entrar(email, senha));
     },
-    async google(_req: Request, _res: Response) {
-      // Implementado na Etapa 2.
-      throw new HttpError(501, MENSAGENS.googleNaoConfigurado);
+    async google(req: Request, res: Response) {
+      const { credential } = validar(esquemaGoogle, req.body);
+      res.json(await auth.entrarComGoogle(credential));
     },
     async perfil(req: Request, res: Response) {
       res.json(await auth.perfil((req as RequisicaoAutenticada).usuarioId));

@@ -10,12 +10,16 @@ vi.mock('../src/repositories/users.repository.js', async (importar) => {
     buscarPorEmail: vi.fn(),
     buscarPorId: vi.fn(),
     criarComSenha: vi.fn(),
+    buscarPorGoogleId: vi.fn(),
+    vincularGoogle: vi.fn(),
+    criarComGoogle: vi.fn(),
   };
 });
 
 const repo = await import('../src/repositories/users.repository.js');
 const { createApp } = await import('../src/app.js');
-const app = createApp();
+const { entrarComGoogle } = await import('../src/services/auth.service.js');
+const app = createApp({ limiteLogin: { maximo: 1000, janelaMs: 60_000 } });
 
 const ANA: UsuarioRegistro = {
   id: '11111111-1111-4111-8111-111111111111',
@@ -162,9 +166,61 @@ describe('GET /api/users/me', () => {
   });
 });
 
+describe('limite de tentativas', () => {
+  it('bloqueia com 429 após exceder o máximo', async () => {
+    const limitado = createApp({ limiteLogin: { maximo: 2, janelaMs: 60_000 } });
+    vi.mocked(repo.buscarPorEmail).mockResolvedValue(null);
+    const corpo = { email: 'x@ex.com', senha: 'errada123' };
+    expect((await request(limitado).post('/api/auth/login').send(corpo)).status).toBe(401);
+    expect((await request(limitado).post('/api/auth/login').send(corpo)).status).toBe(401);
+    const r = await request(limitado).post('/api/auth/login').send(corpo);
+    expect(r.status).toBe(429);
+    expect(r.headers['retry-after']).toBeDefined();
+    expect(r.body.error).toMatch(/Muitas tentativas/);
+  });
+});
+
 describe('POST /api/auth/google', () => {
-  it('ainda não implementado devolve 501', async () => {
-    const r = await request(app).post('/api/auth/google').send({ credential: 'x' });
-    expect(r.status).toBe(501);
+  it('rejeita corpo sem credential', async () => {
+    const r = await request(app).post('/api/auth/google').send({});
+    expect(r.status).toBe(400);
+  });
+
+  it('rejeita credencial inválida com 401', async () => {
+    const r = await request(app).post('/api/auth/google').send({ credential: 'lixo' });
+    expect(r.status).toBe(401);
+    expect(r.body.error).toMatch(/Google/);
+  });
+});
+
+describe('entrarComGoogle', () => {
+  const verificar = async () => ({ sub: 'g-1', email: 'Ana@Ex.com', nome: 'Ana Lima' });
+
+  it('cria conta nova quando não existe', async () => {
+    vi.mocked(repo.buscarPorGoogleId).mockResolvedValue(null);
+    vi.mocked(repo.buscarPorEmail).mockResolvedValue(null);
+    vi.mocked(repo.criarComGoogle).mockResolvedValue({
+      ...ANA,
+      senha_hash: null,
+      google_id: 'g-1',
+    });
+    const r = await entrarComGoogle('t', verificar);
+    expect(repo.criarComGoogle).toHaveBeenCalledWith('Ana Lima', 'ana@ex.com', 'g-1');
+    expect(r.usuario.provedores).toEqual(['google']);
+  });
+
+  it('vincula ao e-mail existente', async () => {
+    vi.mocked(repo.buscarPorGoogleId).mockResolvedValue(null);
+    vi.mocked(repo.buscarPorEmail).mockResolvedValue(ANA);
+    vi.mocked(repo.vincularGoogle).mockResolvedValue({ ...ANA, google_id: 'g-1' });
+    const r = await entrarComGoogle('t', verificar);
+    expect(repo.vincularGoogle).toHaveBeenCalledWith(ANA.id, 'g-1');
+    expect(r.usuario.provedores).toEqual(['senha', 'google']);
+  });
+
+  it('reusa conta já ligada ao Google', async () => {
+    vi.mocked(repo.buscarPorGoogleId).mockResolvedValue({ ...ANA, google_id: 'g-1' });
+    await entrarComGoogle('t', verificar);
+    expect(repo.criarComGoogle).not.toHaveBeenCalled();
   });
 });

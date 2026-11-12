@@ -1,5 +1,6 @@
 import type { RespostaAutenticacao } from '@arrowbot/shared';
 import bcrypt from 'bcryptjs';
+import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import { env } from '../config/data-source.js';
 import { HttpError, MENSAGENS } from '../errors/HttpError.js';
@@ -37,4 +38,43 @@ export async function perfil(id: string) {
   const u = await repo.buscarPorId(id);
   if (!u) throw new HttpError(401, MENSAGENS.sessaoInvalida);
   return { usuario: repo.paraUsuario(u) };
+}
+
+export interface DadosGoogle {
+  sub: string;
+  email: string;
+  nome: string;
+}
+
+/** Valida o ID token do Google e devolve os dados da conta. Trocável nos testes. */
+export type VerificadorGoogle = (idToken: string) => Promise<DadosGoogle>;
+
+export const verificarTokenGoogle: VerificadorGoogle = async (idToken) => {
+  if (!env.googleClientId) throw new HttpError(501, MENSAGENS.googleNaoConfigurado);
+  try {
+    const ticket = await new OAuth2Client(env.googleClientId).verifyIdToken({
+      idToken,
+      audience: env.googleClientId,
+    });
+    const dados = ticket.getPayload();
+    if (!dados?.sub || !dados.email || !dados.email_verified) {
+      throw new Error('conta Google sem e-mail verificado');
+    }
+    return { sub: dados.sub, email: dados.email, nome: dados.name ?? dados.email.split('@')[0]! };
+  } catch {
+    throw new HttpError(401, MENSAGENS.googleInvalido);
+  }
+};
+
+export async function entrarComGoogle(
+  idToken: string,
+  verificar: VerificadorGoogle = verificarTokenGoogle,
+) {
+  const g = await verificar(idToken);
+  const email = g.email.toLowerCase();
+  const porGoogle = await repo.buscarPorGoogleId(g.sub);
+  if (porGoogle) return emitirSessao(porGoogle);
+  const porEmail = await repo.buscarPorEmail(email);
+  if (porEmail) return emitirSessao(await repo.vincularGoogle(porEmail.id, g.sub));
+  return emitirSessao(await repo.criarComGoogle(g.nome.slice(0, 100), email, g.sub));
 }
