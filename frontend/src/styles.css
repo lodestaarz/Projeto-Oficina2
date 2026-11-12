@@ -12,6 +12,8 @@
   --cor-personagem: #ff7a45;
   --cor-personagem-escura: #d9572a;
   --cor-celula: #e8ecf5;
+  --cor-mapa-chao: #d6dcea;
+  --cor-mapa-linha: #eef1f8;
   --cor-rastro: #ffe3d4;
   --cor-sucesso: #2b8a3e;
   --cor-perigo: #c92a2a;
@@ -42,6 +44,8 @@
     --cor-primaria-forte: #8aa1ff;
     --cor-primaria-suave: #26304f;
     --cor-celula: #2a3040;
+    --cor-mapa-chao: #2a3040;
+    --cor-mapa-linha: #3d4558;
     --cor-rastro: #4a3226;
     --cor-perigo: #ff8787;
     --cor-perigo-suave: #3b2226;
@@ -798,13 +802,12 @@ body {
   width: 100%;
   max-height: 420px;
   border-radius: 8px;
-  background: var(--cor-celula);
+  background: var(--cor-mapa-chao);
 }
 .mapa-chao {
-  fill: var(--cor-celula);
-}
-.mapa-chao--alt {
-  fill: #dde3f0;
+  fill: var(--cor-mapa-chao);
+  stroke: var(--cor-mapa-linha);
+  stroke-width: 1;
 }
 .mapa-parede {
   fill: #4a5270;
