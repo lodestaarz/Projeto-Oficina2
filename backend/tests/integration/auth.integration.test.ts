@@ -19,7 +19,7 @@ describe.skipIf(!urlTeste)('autenticação com Postgres real', () => {
   });
 
   beforeEach(async () => {
-    await pool.query('TRUNCATE usuarios');
+    await pool.query('TRUNCATE usuarios CASCADE');
   });
 
   afterAll(async () => {

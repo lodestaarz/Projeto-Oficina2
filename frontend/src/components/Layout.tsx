@@ -22,6 +22,7 @@ export function Layout() {
           <NavLink to="/" end>
             Jogo
           </NavLink>
+          <NavLink to="/fases">Fases</NavLink>
           <NavLink to="/perfil">Perfil</NavLink>
         </nav>
         <div className="cabecalho-usuario">
