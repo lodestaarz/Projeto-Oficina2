@@ -46,5 +46,13 @@ test('resolve a fase 1 com blocos e ganha estrelas', async ({ page }, info) => {
   await page.getByRole('button', { name: /Executar/ }).click();
   await expect(page.getByTestId('estrelas')).toBeVisible({ timeout: 15000 });
   await expect(page.getByTestId('posicao')).toHaveText('Robô em (4, 0)');
+  await expect(page.getByText('Progresso salvo.')).toBeVisible();
   await page.screenshot({ path: info.outputPath('fase1-vitoria.png') });
+
+  // O progresso fica no servidor: volta à seleção e a estrela aparece.
+  await page.getByRole('link', { name: 'Fases', exact: true }).click();
+  await expect(page.getByTestId('estrelas-fase-1')).toBeVisible();
+  await page.reload();
+  await expect(page.getByTestId('estrelas-fase-1')).toBeVisible();
+  await page.screenshot({ path: info.outputPath('selecao-com-estrela.png') });
 });

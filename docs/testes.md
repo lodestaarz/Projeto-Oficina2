@@ -22,7 +22,7 @@ Os casos estão em [`tests/casos-de-teste.md`](../tests/casos-de-teste.md), e a 
 ## Dados e dependências externas
 
 - **Google:** os testes nunca chamam o Google de verdade. A verificação do ID token é substituída por um mock (`vi.mock('google-auth-library')`), que devolve um usuário fictício ou lança erro, conforme o caso.
-- **Banco:** os testes de integração usam um banco separado (`arrowbot_test`), recriado antes da suíte com o mesmo `database/init.sql`. A URL do banco de teste vem da variável `TEST_DATABASE_URL` (sem ela, a suíte é pulada). Para rodar: `TEST_DATABASE_URL=postgres://app:app@localhost:5432/arrowbot_test npm run test:integration -w backend`. Os testes de API comuns não precisam de banco: usam um repositório em memória (`backend/tests/helpers/repositorioEmMemoria.ts`) com as mesmas regras da tabela.
+- **Banco:** os testes de integração usam um banco separado (`arrowbot_test`), recriado antes da suíte com o mesmo `database/init.sql`. A URL do banco de teste vem da variável `TEST_DATABASE_URL` (sem ela, a suíte é pulada). Para rodar: `TEST_DATABASE_URL=postgres://app:app@localhost:5432/arrowbot_test npm run test:integration -w backend`. Os testes de API comuns não precisam de banco: mockam o módulo do repositório com `vi.mock` (`backend/tests/auth.test.ts`, `backend/tests/progresso.test.ts`).
 - **JWT:** os testes usam um `JWT_SECRET` fixo de teste e geram tokens expirados ou adulterados de propósito.
 
 ## Cobertura

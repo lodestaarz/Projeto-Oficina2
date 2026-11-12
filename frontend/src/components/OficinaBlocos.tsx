@@ -55,6 +55,7 @@ export const OficinaBlocos = forwardRef<OficinaHandle, OficinaProps>(function Of
       ref={elemento}
       className="oficina"
       data-testid="oficina"
+      role="region"
       aria-label="Área de montagem dos blocos"
     />
   );

@@ -96,13 +96,17 @@ Regra das camadas: cada camada só chama a camada logo abaixo. Controllers não 
 
 Todas as rotas ficam sob `/api` e trocam JSON. Os erros seguem sempre o formato `{ "error": "mensagem" }`, gerado pelo `errorHandler`.
 
-| Método e rota             | Corpo                                 | Resposta de sucesso      | Erros                                      | Situação     |
-| ------------------------- | ------------------------------------- | ------------------------ | ------------------------------------------ | ------------ |
-| `GET /api/health`         | —                                     | `200 { "status": "ok" }` | —                                          | Implementado |
-| `POST /api/auth/register` | `{ nome, email, senha }`              | `201 { token, usuario }` | `400` dados inválidos, `409` e-mail em uso | Implementado |
-| `POST /api/auth/login`    | `{ email, senha }`                    | `200 { token, usuario }` | `400`, `401` credenciais inválidas         | Implementado |
-| `POST /api/auth/google`   | `{ credential }` (ID token do Google) | `200 { token, usuario }` | `400`, `401` token inválido                | Implementado |
-| `GET /api/users/me`       | — (exige `Authorization: Bearer`)     | `200 { usuario }`        | `401`                                      | Implementado |
+| Método e rota                | Corpo                                 | Resposta de sucesso                                 | Erros                                                               | Situação     |
+| ---------------------------- | ------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------- | ------------ |
+| `GET /api/health`            | —                                     | `200 { "status": "ok" }`                            | —                                                                   | Implementado |
+| `POST /api/auth/register`    | `{ nome, email, senha }`              | `201 { token, usuario }`                            | `400` dados inválidos, `409` e-mail em uso                          | Implementado |
+| `POST /api/auth/login`       | `{ email, senha }`                    | `200 { token, usuario }`                            | `400`, `401` credenciais inválidas                                  | Implementado |
+| `POST /api/auth/google`      | `{ credential }` (ID token do Google) | `200 { token, usuario }`                            | `400`, `401` token inválido                                         | Implementado |
+| `GET /api/users/me`          | — (exige `Authorization: Bearer`)     | `200 { usuario }`                                   | `401`                                                               | Implementado |
+| `GET /api/fases`             | —                                     | `200 { fases }`                                     | —                                                                   | Implementado |
+| `GET /api/fases/:id`         | —                                     | `200 { fase }`                                      | `400` id inválido, `404`                                            | Implementado |
+| `GET /api/progresso`         | — (Bearer)                            | `200 { progresso: [{ faseId, estrelas, blocos }] }` | `401`                                                               | Implementado |
+| `PUT /api/progresso/:faseId` | `{ programa, dicasUsadas }` (Bearer)  | `200 { progresso, estrelas }`                       | `400` corpo inválido, `401`, `404` fase, `422` o programa não vence | Implementado |
 
 O objeto `usuario` devolvido pela API tem o formato `{ id, nome, email, provedores: ["senha" | "google"] }`. Ele nunca inclui `senha_hash` nem `google_id`.
 
@@ -197,3 +201,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 | `GOOGLE_CLIENT_ID`      | backend  | Valida o `aud` do ID token do Google     |
 | `VITE_API_URL`          | frontend | URL base da API (padrão `/api`)          |
 | `VITE_GOOGLE_CLIENT_ID` | frontend | Client ID usado pelo botão do Google     |
+
+## Progresso e estrelas
+
+O servidor nunca confia na nota do cliente: `PUT /api/progresso/:faseId` valida o programa (zod), executa com o motor compartilhado (`shared/src/engine`) e recalcula as estrelas. A tabela `progresso` guarda o melhor resultado por usuário e fase; um resultado pior nunca sobrescreve o anterior.

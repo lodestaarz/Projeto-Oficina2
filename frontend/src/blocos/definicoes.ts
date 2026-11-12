@@ -135,6 +135,8 @@ export function criarOficina(elemento: HTMLElement, fase: Fase): Blockly.Workspa
     media: '/blockly-media/',
     renderer: 'zelos',
   });
+  // O Blockly põe aria-label num div sem papel (proibido pelo WCAG): dá a ele um papel.
+  elemento.querySelector('.injectionDiv')?.setAttribute('role', 'group');
   Blockly.serialization.workspaces.load(
     {
       blocks: {

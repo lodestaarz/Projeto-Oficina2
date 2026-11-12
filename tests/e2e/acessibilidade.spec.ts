@@ -30,3 +30,21 @@ test('jogo e perfil sem violações WCAG A/AA', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Meu perfil' })).toBeVisible();
   expect(await violacoes(page), '/perfil').toEqual([]);
 });
+
+test('seleção de fases e fase com blocos sem violações WCAG A/AA', async ({ page }) => {
+  const email = `a11y-fases-${Date.now()}-${Math.floor(Math.random() * 1e6)}@exemplo.com`;
+  await page.goto('/cadastro');
+  await page.getByLabel('Nome').fill('Pessoa A11y');
+  await page.getByLabel('E-mail').fill(email);
+  await page.getByLabel('Senha').fill('senha-a11y-123');
+  await page.getByRole('button', { name: 'Criar conta' }).click();
+  await expect(page.getByTestId('posicao')).toBeVisible();
+
+  await page.goto('/fases');
+  await expect(page.getByRole('heading', { name: 'Fases', level: 1 })).toBeVisible();
+  expect(await violacoes(page), '/fases').toEqual([]);
+
+  await page.locator('a[href="/fases/1"]').click();
+  await expect(page.getByTestId('oficina')).toBeVisible();
+  expect(await violacoes(page), '/fases/1').toEqual([]);
+});

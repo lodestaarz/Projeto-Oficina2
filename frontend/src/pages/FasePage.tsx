@@ -232,7 +232,7 @@ function FaseConteudo({ faseId }: { faseId: number }) {
                 Python
               </button>
             </div>
-            <pre data-testid="codigo" aria-label="Código equivalente">
+            <pre data-testid="codigo" role="region" aria-label="Código equivalente">
               {gerarCodigo(programa, lang)}
             </pre>
           </div>
