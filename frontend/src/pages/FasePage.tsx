@@ -1,3 +1,4 @@
+import { blocoParaDestacar } from '../blocos/destaque';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import {
@@ -44,8 +45,8 @@ function FaseConteudo({ faseId }: { faseId: number }) {
   const programa = useMemo(() => estadoParaPrograma(estado), [estado]);
 
   useEffect(() => {
-    oficina.current?.destacar(passo?.blocoId ?? null);
-  }, [passo]);
+    oficina.current?.destacar(blocoParaDestacar(passo, pb.terminou));
+  }, [passo, pb.terminou]);
 
   function aoMudar(novo: EstadoOficina) {
     setEstado(novo);
