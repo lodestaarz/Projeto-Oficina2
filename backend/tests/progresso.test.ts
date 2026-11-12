@@ -93,6 +93,18 @@ describe('progresso', () => {
     expect(r.status).toBe(400);
   });
 
+  it('recusa programa com aninhamento acima do limite (400)', async () => {
+    let bloco: Record<string, unknown> = { id: 'x0', tipo: 'avancar' };
+    for (let i = 1; i <= 10; i++) {
+      bloco = { id: `r${i}`, tipo: 'repetir', vezes: 2, corpo: [bloco] };
+    }
+    const r = await request(app)
+      .put('/api/progresso/1')
+      .set(auth)
+      .send({ programa: [bloco] });
+    expect(r.status).toBe(400);
+  });
+
   it('recusa comparação com variável desconhecida (400)', async () => {
     const r = await request(app)
       .put('/api/progresso/14')
