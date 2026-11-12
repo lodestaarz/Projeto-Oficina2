@@ -48,6 +48,43 @@ export function solucaoDaFase(fase: number): Programa {
       ];
     case 9:
       return [{ id: id(), tipo: 'enquanto', condicao: { sensor: 'caminhoLivre' }, corpo: [av()] }];
+    case 10:
+      return [
+        {
+          id: id(),
+          tipo: 'enquanto',
+          condicao: { sensor: 'metaAFrente', negado: true },
+          corpo: [av()],
+        },
+        av(),
+      ];
+    case 11:
+      return [
+        { id: id(), tipo: 'enquanto', condicao: { sensor: 'caminhoLivre' }, corpo: [av()] },
+        gd(),
+        av(),
+        av(),
+        gd(),
+        { id: id(), tipo: 'enquanto', condicao: { sensor: 'caminhoLivre' }, corpo: [av()] },
+      ];
+    case 12:
+      return [
+        {
+          id: id(),
+          tipo: 'enquanto',
+          condicao: { sensor: 'metaAFrente', negado: true },
+          corpo: [
+            {
+              id: id(),
+              tipo: 'se',
+              condicao: { sensor: 'obstaculoAFrente' },
+              entao: [gd()],
+              senao: [av()],
+            },
+          ],
+        },
+        av(),
+      ];
     default:
       return [];
   }
