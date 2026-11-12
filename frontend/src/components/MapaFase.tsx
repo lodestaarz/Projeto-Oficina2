@@ -33,13 +33,12 @@ export function MapaFase({ fase, robo, temChave, erro = false }: MapaFaseProps) 
       {celulas.map(({ x, y, c }) => {
         const px = x * TAM;
         const py = y * TAM;
-        const chaoCor = (x + y) % 2 === 0 ? 'mapa-chao' : 'mapa-chao mapa-chao--alt';
         return (
           <g key={`${x}-${y}`} data-celula={`${x},${y}`} data-tipo={c}>
             {c === '#' ? (
               <rect x={px} y={py} width={TAM} height={TAM} className="mapa-parede" />
             ) : (
-              <rect x={px} y={py} width={TAM} height={TAM} className={chaoCor} />
+              <rect x={px} y={py} width={TAM} height={TAM} className="mapa-chao" />
             )}
             {c === 'o' && (
               <ellipse
