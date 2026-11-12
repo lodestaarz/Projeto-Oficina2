@@ -55,3 +55,12 @@ test('resolve a fase 1 com blocos e ganha estrelas', async ({ page }, info) => {
   await expect(page.getByTestId('estrelas-fase-1')).toBeVisible();
   await page.screenshot({ path: info.outputPath('selecao-com-estrela.png') });
 });
+
+test('fase 13 mostra itens no mapa e o contador de itens', async ({ page }, info) => {
+  await cadastrar(page);
+  await page.goto('/fases/13');
+  await expect(page.getByTestId('oficina')).toBeVisible();
+  await expect(page.getByTestId('item')).toHaveCount(3);
+  await expect(page.getByTestId('variaveis')).toContainText('itens: 0');
+  await page.screenshot({ path: info.outputPath('fase13-itens.png') });
+});

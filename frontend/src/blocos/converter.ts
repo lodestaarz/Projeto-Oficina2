@@ -1,4 +1,4 @@
-import type { Bloco, Condicao, Programa, Sensor } from '@arrowbot/shared/engine';
+import type { Bloco, Condicao, Programa, Sensor, Variavel } from '@arrowbot/shared/engine';
 
 /** Subconjunto do JSON de `Blockly.serialization.workspaces.save` que o ArrowBot usa. */
 export interface BlocoSerializado {
@@ -21,8 +21,16 @@ const SENSORES: readonly Sensor[] = [
 ];
 
 /** Condição vem do dropdown como `sensor` ou `!sensor` (negado). */
-export function lerCondicao(valor: unknown): Condicao {
+export function lerCondicao(valor: unknown, limite?: unknown): Condicao {
   const texto = typeof valor === 'string' ? valor : '';
+  const cmp = /^(contador|itens)([<=>])$/.exec(texto);
+  if (cmp) {
+    return {
+      variavel: cmp[1] as Variavel,
+      op: cmp[2] as '<' | '=' | '>',
+      valor: Number(limite) || 0,
+    };
+  }
   const negado = texto.startsWith('!');
   const sensor = (negado ? texto.slice(1) : texto) as Sensor;
   return { sensor: SENSORES.includes(sensor) ? sensor : 'obstaculoAFrente', negado };
@@ -48,18 +56,22 @@ function converterBloco(b: BlocoSerializado): Bloco | null {
       return { id, tipo: 'girar', lado: campo('LADO') === 'esquerda' ? 'esquerda' : 'direita' };
     case 'arrow_repetir':
       return { id, tipo: 'repetir', vezes: Number(campo('VEZES')), corpo: entrada('CORPO') };
+    case 'arrow_definir':
+      return { id, tipo: 'definir', valor: Number(campo('VALOR')) || 0 };
+    case 'arrow_somar':
+      return { id, tipo: 'somar', valor: Number(campo('VALOR')) || 0 };
     case 'arrow_enquanto':
       return {
         id,
         tipo: 'enquanto',
-        condicao: lerCondicao(campo('COND')),
+        condicao: lerCondicao(campo('COND'), campo('VALOR')),
         corpo: entrada('CORPO'),
       };
     case 'arrow_se':
       return {
         id,
         tipo: 'se',
-        condicao: lerCondicao(campo('COND')),
+        condicao: lerCondicao(campo('COND'), campo('VALOR')),
         entao: entrada('ENTAO'),
         senao: entrada('SENAO'),
       };

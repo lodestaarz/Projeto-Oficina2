@@ -85,6 +85,50 @@ export function solucaoDaFase(fase: number): Programa {
         },
         av(),
       ];
+    case 13:
+      return [
+        {
+          id: id(),
+          tipo: 'enquanto',
+          condicao: { variavel: 'itens', op: '<', valor: 3 },
+          corpo: [av()],
+        },
+        av(),
+        av(),
+      ];
+    case 14:
+      return [
+        { id: id(), tipo: 'definir', valor: 0 },
+        rep(9, [
+          av(),
+          { id: id(), tipo: 'somar', valor: 1 },
+          {
+            id: id(),
+            tipo: 'se',
+            condicao: { variavel: 'contador', op: '=', valor: 3 },
+            entao: [gd(), { id: id(), tipo: 'definir', valor: 0 }],
+            senao: [],
+          },
+        ]),
+      ];
+    case 15:
+      return [
+        {
+          id: id(),
+          tipo: 'enquanto',
+          condicao: { variavel: 'itens', op: '<', valor: 3 },
+          corpo: [
+            {
+              id: id(),
+              tipo: 'se',
+              condicao: { sensor: 'obstaculoAFrente' },
+              entao: [gd()],
+              senao: [av()],
+            },
+          ],
+        },
+        { id: id(), tipo: 'enquanto', condicao: { sensor: 'caminhoLivre' }, corpo: [av()] },
+      ];
     default:
       return [];
   }

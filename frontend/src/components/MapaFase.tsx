@@ -4,6 +4,8 @@ interface MapaFaseProps {
   fase: Fase;
   robo: Robo;
   temChave: boolean;
+  /** Itens já coletados, como "x,y". */
+  coletados?: string[];
   /** Muda a cada erro para reiniciar a animação de batida. */
   erro?: boolean;
 }
@@ -11,7 +13,7 @@ interface MapaFaseProps {
 const TAM = 56;
 
 /** Mapa da fase em SVG: chão, paredes, buracos, meta, chave e porta, com o robô. */
-export function MapaFase({ fase, robo, temChave, erro = false }: MapaFaseProps) {
+export function MapaFase({ fase, robo, temChave, coletados = [], erro = false }: MapaFaseProps) {
   const linhas = fase.grade.length;
   const colunas = Math.max(...fase.grade.map((l) => l.length));
   const celulas: { x: number; y: number; c: string }[] = [];
@@ -61,6 +63,11 @@ export function MapaFase({ fase, robo, temChave, erro = false }: MapaFaseProps) 
               <g className="mapa-chave">
                 <circle cx={px + 22} cy={py + 28} r={8} />
                 <rect x={px + 28} y={py + 25} width={18} height={6} />
+              </g>
+            )}
+            {c === 'I' && !coletados.includes(`${x},${y}`) && (
+              <g className="mapa-item" data-testid="item">
+                <circle cx={px + TAM / 2} cy={py + TAM / 2} r={10} />
               </g>
             )}
             {c === 'D' && (

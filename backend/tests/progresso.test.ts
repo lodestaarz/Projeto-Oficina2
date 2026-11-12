@@ -69,6 +69,40 @@ describe('progresso', () => {
     expect(vi.mocked(repo.salvarMelhor).mock.calls[0]?.[0]).toBe(USUARIO);
   });
 
+  it.each([13, 14, 15])('aceita a solução com variáveis/itens da fase %i', async (fase) => {
+    vi.mocked(repo.salvarMelhor).mockImplementation(async (_u, faseId, estrelas, blocos) => ({
+      fase_id: faseId,
+      estrelas,
+      blocos,
+      dicas_usadas: 0,
+      atualizado_em: new Date(),
+    }));
+    const r = await request(app)
+      .put(`/api/progresso/${fase}`)
+      .set(auth)
+      .send({ programa: solucaoDaFase(fase), dicasUsadas: 0 });
+    expect(r.status).toBe(200);
+    expect(r.body.estrelas).toBe(3);
+  });
+
+  it('recusa comparação com variável desconhecida (400)', async () => {
+    const r = await request(app)
+      .put('/api/progresso/14')
+      .set(auth)
+      .send({
+        programa: [
+          {
+            id: 'a',
+            tipo: 'se',
+            condicao: { variavel: 'x', op: '<', valor: 1 },
+            entao: [],
+            senao: [],
+          },
+        ],
+      });
+    expect(r.status).toBe(400);
+  });
+
   it('recusa programa que não vence (422) sem gravar', async () => {
     const r = await request(app)
       .put('/api/progresso/1')

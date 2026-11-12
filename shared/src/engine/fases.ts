@@ -1,6 +1,6 @@
 import type { Fase } from './tipos.ts';
 
-/** Fases (1–12 até aqui). Cada uma introduz um conceito. Grade: '.' chão, '#' parede, 'o' buraco, 'G' meta, 'K' chave, 'D' porta. */
+/** Fases (1–15 até aqui). Cada uma introduz um conceito. Grade: '.' chão, '#' parede, 'o' buraco, 'G' meta, 'K' chave, 'D' porta. */
 export const FASES: readonly Fase[] = [
   {
     id: 1,
@@ -196,6 +196,62 @@ export const FASES: readonly Fase[] = [
       'O enquanto termina quando a bandeira está à frente.',
       'Dentro: se obstáculo à frente, gire à direita; senão, avance. Ao final, avance mais uma vez.',
       'enquanto não (bandeira à frente) { se obstáculo { direita } senão { avançar } }, avançar.',
+    ],
+  },
+  {
+    id: 13,
+    titulo: 'Contando itens',
+    conceito: 'Variáveis',
+    enunciado:
+      'Colete 3 itens (os círculos) antes de ir à bandeira. O contador "itens" sobe sozinho a cada item pego: repita enquanto itens < 3.',
+    grade: ['.I.I.I.G'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'repetir', 'enquanto'],
+    sensoresPermitidos: [],
+    variaveisPermitidas: ['itens'],
+    itensMeta: 3,
+    blocosIdeais: 4,
+    dicas: [
+      'A variável "itens" guarda quantos itens você já pegou.',
+      'enquanto itens < 3 { avançar } para no terceiro item.',
+      'enquanto itens < 3 { avançar }, avançar, avançar.',
+    ],
+  },
+  {
+    id: 14,
+    titulo: 'Meu contador',
+    conceito: 'Variáveis',
+    enunciado:
+      'Crie seu próprio contador: defina-o como 0, some 1 a cada passo e, quando chegar a 3, gire e zere de novo.',
+    grade: ['....', '###.', '###.', 'G...'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'repetir', 'se', 'definir', 'somar'],
+    sensoresPermitidos: [],
+    variaveisPermitidas: ['contador'],
+    blocosIdeais: 7,
+    dicas: [
+      'Comece com "definir contador = 0" e repita 9 vezes.',
+      'Dentro: avançar, somar 1 ao contador, e se contador = 3 → girar à direita e definir contador = 0.',
+      'definir 0, repetir 9 { avançar, somar 1, se contador = 3 { direita, definir 0 } }.',
+    ],
+  },
+  {
+    id: 15,
+    titulo: 'Coleta com volta',
+    conceito: 'Variáveis',
+    enunciado:
+      'Pegue os 3 itens seguindo o caminho: enquanto itens < 3, gire se houver parede, senão avance. Depois ande até a bandeira.',
+    grade: ['.I.I.', '####.', 'G.I..'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'enquanto', 'se'],
+    sensoresPermitidos: ['obstaculoAFrente', 'caminhoLivre'],
+    variaveisPermitidas: ['itens'],
+    itensMeta: 3,
+    blocosIdeais: 6,
+    dicas: [
+      'O primeiro enquanto usa "itens < 3"; o segundo, "caminho livre".',
+      'No primeiro: se obstáculo à frente, gire à direita; senão, avance.',
+      'enquanto itens < 3 { se obstáculo { direita } senão { avançar } }, enquanto livre { avançar }.',
     ],
   },
 ];

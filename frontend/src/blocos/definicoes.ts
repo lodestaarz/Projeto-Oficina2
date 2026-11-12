@@ -1,7 +1,7 @@
 import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
 import * as Pt from 'blockly/msg/pt-br';
-import type { Fase, Sensor, TipoBloco } from '@arrowbot/shared/engine';
+import type { Fase, Sensor, TipoBloco, Variavel } from '@arrowbot/shared/engine';
 
 Blockly.setLocale(Pt as unknown as Record<string, string>);
 
@@ -12,17 +12,40 @@ export const ROTULO_SENSOR: Record<Sensor, string> = {
   metaAFrente: 'meta à frente',
 };
 
-const COR = { movimento: 210, controle: 35, logica: 290, inicio: 120 };
+const COR = { movimento: 210, controle: 35, logica: 290, inicio: 120, variavel: 330 };
 
 /** Sensores liberados na fase aberta (as opções do dropdown dependem dela). */
 let sensoresAtivos: Sensor[] = ['obstaculoAFrente'];
+let variaveisAtivas: Variavel[] = [];
+
+const OPERADORES = ['<', '=', '>'] as const;
 
 function opcoesCondicao(): [string, string][] {
   const opcoes: [string, string][] = [];
   for (const s of sensoresAtivos) {
     opcoes.push([ROTULO_SENSOR[s], s], [`não ${ROTULO_SENSOR[s]}`, `!${s}`]);
   }
+  for (const v of variaveisAtivas) {
+    for (const op of OPERADORES) opcoes.push([`${v} ${op}`, `${v}${op}`]);
+  }
   return opcoes;
+}
+
+/** Condição de comparação (`contador<`): mostra o campo numérico só nesse caso. */
+function ehComparacao(valor: string): boolean {
+  return /[<=>]$/.test(valor);
+}
+
+/** Campo "condição" + número (visível só em comparações). */
+function adicionarCondicao(bloco: Blockly.Block, rotulo: string): void {
+  const entrada = bloco.appendDummyInput().appendField(rotulo);
+  const dropdown = new Blockly.FieldDropdown(opcoesCondicao, (novo: string) => {
+    campoValor.setVisible(ehComparacao(novo));
+    return novo;
+  });
+  const campoValor = new Blockly.FieldNumber(0, 0, 99, 1);
+  entrada.appendField(dropdown, 'COND').appendField(campoValor, 'VALOR');
+  campoValor.setVisible(ehComparacao(String(dropdown.getValue() ?? '')));
 }
 
 let registrado = false;
@@ -75,13 +98,29 @@ function registrarBlocos(): void {
       colour: COR.controle,
       tooltip: 'Repete os blocos de dentro.',
     },
+    {
+      type: 'arrow_definir',
+      message0: 'definir contador = %1',
+      args0: [{ type: 'field_number', name: 'VALOR', value: 0, min: -99, max: 99, precision: 1 }],
+      previousStatement: null,
+      nextStatement: null,
+      colour: COR.variavel,
+      tooltip: 'Guarda um número na variável contador.',
+    },
+    {
+      type: 'arrow_somar',
+      message0: 'somar %1 ao contador',
+      args0: [{ type: 'field_number', name: 'VALOR', value: 1, min: -99, max: 99, precision: 1 }],
+      previousStatement: null,
+      nextStatement: null,
+      colour: COR.variavel,
+      tooltip: 'Soma um número ao contador.',
+    },
   ]);
 
   Blockly.Blocks['arrow_enquanto'] = {
     init(this: Blockly.Block) {
-      this.appendDummyInput()
-        .appendField('enquanto')
-        .appendField(new Blockly.FieldDropdown(opcoesCondicao), 'COND');
+      adicionarCondicao(this, 'enquanto');
       this.appendStatementInput('CORPO');
       this.setPreviousStatement(true);
       this.setNextStatement(true);
@@ -92,9 +131,7 @@ function registrarBlocos(): void {
 
   Blockly.Blocks['arrow_se'] = {
     init(this: Blockly.Block) {
-      this.appendDummyInput()
-        .appendField('se')
-        .appendField(new Blockly.FieldDropdown(opcoesCondicao), 'COND');
+      adicionarCondicao(this, 'se');
       this.appendStatementInput('ENTAO').appendField('então');
       this.appendStatementInput('SENAO').appendField('senão');
       this.setPreviousStatement(true);
@@ -111,6 +148,8 @@ const TIPO_BLOCKLY: Record<TipoBloco, string> = {
   repetir: 'arrow_repetir',
   enquanto: 'arrow_enquanto',
   se: 'arrow_se',
+  definir: 'arrow_definir',
+  somar: 'arrow_somar',
 };
 
 /** Monta a caixa de ferramentas só com o que a fase libera. */
@@ -125,6 +164,7 @@ export function criarOficina(elemento: HTMLElement, fase: Fase): Blockly.Workspa
   registrarBlocos();
   sensoresAtivos =
     fase.sensoresPermitidos.length > 0 ? fase.sensoresPermitidos : ['obstaculoAFrente'];
+  variaveisAtivas = fase.variaveisPermitidas ?? [];
   const ws = Blockly.inject(elemento, {
     toolbox: caixaDeFerramentas(fase),
     trashcan: true,

@@ -5,14 +5,28 @@ export type Direcao = 0 | 1 | 2 | 3;
 
 export type Sensor = 'obstaculoAFrente' | 'buracoAFrente' | 'caminhoLivre' | 'metaAFrente';
 
-export interface Condicao {
+export type Variavel = 'contador' | 'itens';
+export type OperadorComparacao = '<' | '=' | '>';
+
+export interface CondicaoSensor {
   sensor: Sensor;
   negado?: boolean;
 }
 
+/** Compara uma variável com um número (ex.: itens < 3). */
+export interface CondicaoComparar {
+  variavel: Variavel;
+  op: OperadorComparacao;
+  valor: number;
+}
+
+export type Condicao = CondicaoSensor | CondicaoComparar;
+
 export type Bloco =
   | { id: string; tipo: 'avancar' }
   | { id: string; tipo: 'girar'; lado: 'esquerda' | 'direita' }
+  | { id: string; tipo: 'definir'; valor: number }
+  | { id: string; tipo: 'somar'; valor: number }
   | { id: string; tipo: 'repetir'; vezes: number; corpo: Bloco[] }
   | { id: string; tipo: 'enquanto'; condicao: Condicao; corpo: Bloco[] }
   | { id: string; tipo: 'se'; condicao: Condicao; entao: Bloco[]; senao: Bloco[] };
@@ -22,7 +36,7 @@ export type TipoBloco = Bloco['tipo'];
 export type Programa = Bloco[];
 
 /**
- * Caracteres da grade: '.' chão, '#' parede, 'o' buraco, 'G' meta, 'K' chave, 'D' porta.
+ * Caracteres da grade: '.' chão, '#' parede, 'o' buraco, 'G' meta, 'K' chave, 'D' porta, 'I' item.
  * Fora da grade conta como parede.
  */
 export interface Fase {
@@ -35,6 +49,10 @@ export interface Fase {
   blocosPermitidos: TipoBloco[];
   sensoresPermitidos: Sensor[];
   /** Número mínimo de blocos de uma solução conhecida (3 estrelas). */
+  /** Variáveis que podem aparecer em comparações (padrão: nenhuma). */
+  variaveisPermitidas?: Variavel[];
+  /** Itens ('I') necessários para a meta valer (padrão: 0). */
+  itensMeta?: number;
   blocosIdeais: number;
   dicas: string[];
 }
@@ -59,6 +77,11 @@ export interface Passo {
   blocoId: string;
   robo: Robo;
   temChave: boolean;
+  /** Itens coletados e valor do contador neste passo. */
+  itens: number;
+  contador: number;
+  /** Células de item já recolhidas, como "x,y". */
+  coletados: string[];
   erro?: ErroExecucao;
 }
 

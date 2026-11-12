@@ -97,4 +97,42 @@ describe('gerarCodigo', () => {
     expect(gerarCodigo(vazio, 'python')).toBe('while caminho_livre():\n  pass');
     expect(gerarCodigo([], 'js')).toContain('nenhum bloco');
   });
+
+  it('converte e gera código de variáveis e comparações', () => {
+    const prog = estadoParaPrograma({
+      blocks: {
+        blocks: [
+          {
+            type: 'arrow_inicio',
+            id: 'i',
+            next: {
+              block: {
+                type: 'arrow_definir',
+                id: 'd',
+                fields: { VALOR: 0 },
+                next: {
+                  block: {
+                    type: 'arrow_enquanto',
+                    id: 'w',
+                    fields: { COND: 'itens<', VALOR: 3 },
+                    inputs: {
+                      CORPO: {
+                        block: { type: 'arrow_somar', id: 's', fields: { VALOR: 1 } },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
+    expect(prog[1]).toMatchObject({
+      tipo: 'enquanto',
+      condicao: { variavel: 'itens', op: '<', valor: 3 },
+    });
+    expect(gerarCodigo(prog, 'js')).toBe('contador = 0;\nwhile (itens < 3) {\n  contador += 1;\n}');
+    expect(gerarCodigo(prog, 'python')).toBe('contador = 0\nwhile itens < 3:\n  contador += 1');
+  });
 });

@@ -17,6 +17,10 @@ const SENSOR_PY: Record<Sensor, string> = {
 };
 
 function condicao(c: Condicao, lang: Linguagem): string {
+  if ('variavel' in c) {
+    const op = c.op === '=' ? '==' : c.op;
+    return `${c.variavel} ${op} ${c.valor}`;
+  }
   const base = (lang === 'js' ? SENSOR_JS : SENSOR_PY)[c.sensor];
   if (!c.negado) return base;
   return lang === 'js' ? `!${base}` : `not ${base}`;
@@ -36,6 +40,12 @@ function linhas(blocos: Bloco[], lang: Linguagem, nivel: number): string[] {
         saida.push(lang === 'js' ? `${rec}${fn}();` : `${rec}${fnPy}()`);
         break;
       }
+      case 'definir':
+        saida.push(`${rec}contador = ${b.valor}${lang === 'js' ? ';' : ''}`);
+        break;
+      case 'somar':
+        saida.push(`${rec}contador += ${b.valor}${lang === 'js' ? ';' : ''}`);
+        break;
       case 'repetir':
         if (lang === 'js') {
           saida.push(`${rec}for (let i = 0; i < ${b.vezes}; i++) {`);
