@@ -21,11 +21,11 @@ export function RotaProtegida() {
   return <Outlet />;
 }
 
-/** Login e cadastro: quem já está logado vai direto para o jogo. */
+/** Login e cadastro: quem já está logado vai direto para as fases. */
 export function RotaPublica() {
   const { status } = useAuth();
   const location = useLocation();
-  const destino = (location.state as { de?: string } | null)?.de ?? '/';
+  const destino = (location.state as { de?: string } | null)?.de ?? '/fases';
 
   if (status === 'carregando') return <Carregando />;
   if (status === 'autenticado') return <Navigate to={destino} replace />;

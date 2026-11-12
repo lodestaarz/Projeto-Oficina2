@@ -19,10 +19,13 @@ export function Layout() {
       <header className="cabecalho">
         <Logo />
         <nav className="cabecalho-nav" aria-label="Principal">
-          <NavLink to="/" end>
-            Jogo
+          <NavLink
+            to="/fases"
+            className={({ isActive }) => `nav-destaque${isActive ? ' active' : ''}`}
+          >
+            Jogar
           </NavLink>
-          <NavLink to="/fases">Fases</NavLink>
+          <NavLink to="/treino">Treino livre</NavLink>
           <NavLink to="/perfil">Perfil</NavLink>
         </nav>
         <div className="cabecalho-usuario">

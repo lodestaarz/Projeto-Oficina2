@@ -10,6 +10,9 @@ test('cadastro, jogo, perfil, sair e entrar de novo', async ({ page }) => {
   await page.getByLabel('Senha').fill(senha);
   await page.getByRole('button', { name: 'Criar conta' }).click();
 
+  await expect(page).toHaveURL(/\/fases$/);
+  await expect(page.getByRole('heading', { name: 'Fases', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Treino livre' }).click();
   const posicao = page.getByTestId('posicao');
   await expect(posicao).toBeVisible();
   const antes = await posicao.textContent();
@@ -26,8 +29,8 @@ test('cadastro, jogo, perfil, sair e entrar de novo', async ({ page }) => {
   await page.getByLabel('Senha').fill(senha);
   await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Meu perfil' })).toBeVisible();
-  await page.getByRole('link', { name: 'Jogo' }).click();
-  await expect(page.getByTestId('posicao')).toBeVisible();
+  await page.getByRole('link', { name: 'Jogar' }).click();
+  await expect(page.getByRole('heading', { name: 'Fases', exact: true })).toBeVisible();
 });
 
 test('login com senha errada mostra erro', async ({ page }) => {

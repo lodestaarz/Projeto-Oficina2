@@ -118,6 +118,16 @@ body {
   color: var(--cor-primaria);
 }
 
+.cabecalho-nav a.nav-destaque {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.cabecalho-nav a.nav-destaque:hover {
+  color: #fff;
+  background: var(--cor-primaria-forte);
+}
+
 .cabecalho-usuario {
   display: flex;
   align-items: center;

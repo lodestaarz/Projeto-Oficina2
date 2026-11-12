@@ -7,7 +7,7 @@ async function cadastrar(page: Page) {
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Senha').fill('senha-e2e-123');
   await page.getByRole('button', { name: 'Criar conta' }).click();
-  await expect(page.getByTestId('posicao')).toBeVisible();
+  await expect(page).toHaveURL(/\/fases$/);
 }
 
 /** Arrasta um bloco da caixa de ferramentas e encaixa embaixo de "quando executar". */
@@ -28,7 +28,6 @@ async function arrastarBloco(page: Page, nome: string) {
 
 test('resolve a fase 1 com blocos e ganha estrelas', async ({ page }, info) => {
   await cadastrar(page);
-  await page.getByRole('link', { name: 'Fases' }).click();
   await page.locator('a[href="/fases/1"]').click();
   await expect(page.getByTestId('oficina')).toBeVisible();
 
@@ -50,7 +49,7 @@ test('resolve a fase 1 com blocos e ganha estrelas', async ({ page }, info) => {
   await page.screenshot({ path: info.outputPath('fase1-vitoria.png') });
 
   // O progresso fica no servidor: volta à seleção e a estrela aparece.
-  await page.getByRole('link', { name: 'Fases', exact: true }).click();
+  await page.getByRole('link', { name: '← Fases' }).click();
   await expect(page.getByTestId('estrelas-fase-1')).toBeVisible();
   await page.reload();
   await expect(page.getByTestId('estrelas-fase-1')).toBeVisible();

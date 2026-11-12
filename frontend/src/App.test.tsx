@@ -37,7 +37,7 @@ describe('Rotas protegidas (RF04)', () => {
 
     renderizarApp('/');
 
-    expect(await screen.findByRole('heading', { name: 'Mova o robô' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Fases' })).toBeInTheDocument();
     const [, init] = fetch.mock.calls[0] ?? [];
     expect(new Headers(init?.headers).get('Authorization')).toMatch(/^Bearer /);
   });
@@ -82,12 +82,12 @@ describe('Rotas protegidas (RF04)', () => {
 
     renderizarApp('/');
 
-    expect(await screen.findByRole('heading', { name: 'Mova o robô' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Fases' })).toBeInTheDocument();
   });
 });
 
 describe('Login, cadastro e logout (RF01, RF02, RF04)', () => {
-  it('CT-AUTH-05 na interface: entra com e-mail e senha e vai para a área de movimentação', async () => {
+  it('CT-AUTH-05 na interface: entra com e-mail e senha e vai para as fases', async () => {
     const user = userEvent.setup();
     const fetch = simularApi([
       { metodo: 'POST', caminho: '/auth/login', resposta: () => respostaJson(200, sessaoValida()) },
@@ -98,7 +98,7 @@ describe('Login, cadastro e logout (RF01, RF02, RF04)', () => {
     await user.type(screen.getByLabelText('Senha'), 'segredo12');
     await user.click(screen.getByRole('button', { name: 'Entrar' }));
 
-    expect(await screen.findByRole('heading', { name: 'Mova o robô' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Fases' })).toBeInTheDocument();
     expect(screen.getByText('Olá, Ana!')).toBeInTheDocument();
 
     const [url, init] = fetch.mock.calls[0] ?? [];
@@ -142,7 +142,7 @@ describe('Login, cadastro e logout (RF01, RF02, RF04)', () => {
     await user.type(screen.getByLabelText('Senha'), 'segredo12');
     await user.click(screen.getByRole('button', { name: 'Criar conta' }));
 
-    expect(await screen.findByRole('heading', { name: 'Mova o robô' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Fases' })).toBeInTheDocument();
     const [, init] = fetch.mock.calls[0] ?? [];
     expect(JSON.parse(String(init?.body))).toEqual({
       nome: 'Ana Lima',
@@ -191,7 +191,7 @@ describe('Login, cadastro e logout (RF01, RF02, RF04)', () => {
       },
     ]);
     renderizarApp('/');
-    await screen.findByRole('heading', { name: 'Mova o robô' });
+    await screen.findByRole('heading', { name: 'Fases' });
 
     await user.click(screen.getByRole('button', { name: 'Sair' }));
 
@@ -212,7 +212,7 @@ describe('Login, cadastro e logout (RF01, RF02, RF04)', () => {
       },
     ]);
     renderizarApp('/login');
-    expect(await screen.findByRole('heading', { name: 'Mova o robô' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Fases' })).toBeInTheDocument();
   });
 });
 
