@@ -43,3 +43,20 @@ export const authApi = {
   perfil: (token: string, signal?: AbortSignal) =>
     chamar<RespostaPerfil>('/users/me', { token, signal }),
 };
+
+export interface ItemProgresso {
+  faseId: number;
+  estrelas: number;
+  blocos: number;
+}
+
+export const progressoApi = {
+  listar: (token: string, signal?: AbortSignal) =>
+    chamar<{ progresso: ItemProgresso[] }>('/progresso', { token, signal }),
+  registrar: (token: string, faseId: number, programa: unknown, dicasUsadas: number) =>
+    chamar<{ progresso: ItemProgresso; estrelas: number }>(`/progresso/${faseId}`, {
+      metodo: 'PUT',
+      corpo: { programa, dicasUsadas },
+      token,
+    }),
+};

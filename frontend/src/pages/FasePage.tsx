@@ -11,6 +11,8 @@ import {
 import { gerarCodigo, type Linguagem } from '../blocos/codigo';
 import { estadoParaPrograma, type EstadoOficina } from '../blocos/converter';
 import { usePlayback, VELOCIDADES, type IdVelocidade } from '../blocos/usePlayback';
+import { useAuth } from '../contexts/AuthContext';
+import { progressoApi } from '../services/api';
 import { MapaFase } from '../components/MapaFase';
 import { OficinaBlocos, type OficinaHandle } from '../components/OficinaBlocos';
 
@@ -95,6 +97,22 @@ function FaseConteudo({ faseId }: { faseId: number }) {
   const venceu = fim && resultado.status === 'venceu';
   const estrelas = venceu ? calcularEstrelas(fase, programaRodado, resultado, dicasUsadas) : 0;
   const proxima = buscarFase(fase.id + 1);
+  const { token } = useAuth();
+  const [salvo, setSalvo] = useState<'' | 'ok' | 'erro'>('');
+
+  // Ao vencer, o servidor refaz o cálculo e guarda o melhor resultado (só com login).
+  useEffect(() => {
+    if (!venceu || !token) return;
+    let ativo = true;
+    progressoApi
+      .registrar(token, fase.id, programaRodado, dicasUsadas)
+      .then(() => ativo && setSalvo('ok'))
+      .catch(() => ativo && setSalvo('erro'));
+    return () => {
+      ativo = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [venceu, token, fase.id]);
 
   return (
     <div className="fase">
@@ -171,6 +189,8 @@ function FaseConteudo({ faseId }: { faseId: number }) {
                     {ESTRELAS[estrelas]}
                   </p>
                 )}
+                {salvo === 'ok' && <p className="fase-enunciado">Progresso salvo.</p>}
+                {salvo === 'erro' && <p className="aviso">Não foi possível salvar o progresso.</p>}
                 {venceu && proxima && (
                   <Link className="botao" to={`/fases/${proxima.id}`}>
                     Próxima fase →

@@ -33,8 +33,10 @@ export function contarBlocos(programa: Programa): number {
 }
 
 class ParadaDeExecucao extends Error {
-  constructor(readonly erro: ErroExecucao | null) {
+  readonly erro: ErroExecucao | null;
+  constructor(erro: ErroExecucao | null) {
     super('parada');
+    this.erro = erro;
   }
 }
 

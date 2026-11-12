@@ -20,3 +20,17 @@ CREATE TABLE IF NOT EXISTS usuarios (
   CONSTRAINT nome_nao_vazio
     CHECK (length(trim(nome)) > 0)
 );
+
+-- Progresso por fase. O conteúdo das fases vive no motor compartilhado
+-- (shared/src/engine); aqui guardamos só o melhor resultado de cada pessoa.
+CREATE TABLE IF NOT EXISTS progresso (
+  usuario_id     UUID NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE,
+  fase_id        INTEGER NOT NULL CHECK (fase_id > 0),
+  estrelas       SMALLINT NOT NULL CHECK (estrelas BETWEEN 1 AND 3),
+  blocos         INTEGER NOT NULL CHECK (blocos > 0),
+  dicas_usadas   SMALLINT NOT NULL DEFAULT 0 CHECK (dicas_usadas >= 0),
+  programa       JSONB NOT NULL,
+  atualizado_em  TIMESTAMPTZ NOT NULL DEFAULT now(),
+
+  PRIMARY KEY (usuario_id, fase_id)
+);
