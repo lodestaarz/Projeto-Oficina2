@@ -134,11 +134,21 @@ function FaseConteudo({ faseId }: { faseId: number }) {
             fase={fase}
             robo={robo}
             temChave={passo?.temChave ?? false}
+            coletados={passo?.coletados ?? []}
             erro={Boolean(passo?.erro)}
           />
           <p className="posicao" aria-live="polite" data-testid="posicao">
             Robô em ({robo.x}, {robo.y})
           </p>
+          {fase.variaveisPermitidas && fase.variaveisPermitidas.length > 0 && (
+            <p className="variaveis" data-testid="variaveis">
+              {fase.variaveisPermitidas.map((v) => (
+                <span key={v} className="variavel">
+                  {v}: <strong>{passo?.[v] ?? 0}</strong>
+                </span>
+              ))}
+            </p>
+          )}
 
           <div className="fase-controles" role="group" aria-label="Controles de execução">
             <button type="button" className="botao" onClick={rodar} disabled={pb.tocando}>

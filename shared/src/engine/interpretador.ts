@@ -44,6 +44,8 @@ class ParadaDeExecucao extends Error {
 export function executar(fase: Fase, programa: Programa): Resultado {
   const robo: Robo = { ...fase.inicio };
   let temChave = false;
+  let contador = 0;
+  const coletados = new Set<string>();
   const passos: Passo[] = [];
 
   const registrar = (blocoId: string, erro?: ErroExecucao): void => {
@@ -54,7 +56,15 @@ export function executar(fase: Fase, programa: Programa): Resultado {
         dica: 'Confira a condição do "enquanto" ou o número de repetições.',
       });
     }
-    passos.push({ blocoId, robo: { ...robo }, temChave, ...(erro ? { erro } : {}) });
+    passos.push({
+      blocoId,
+      robo: { ...robo },
+      temChave,
+      itens: coletados.size,
+      contador,
+      coletados: [...coletados],
+      ...(erro ? { erro } : {}),
+    });
   };
 
   const frente = (): { x: number; y: number } => {
@@ -62,7 +72,16 @@ export function executar(fase: Fase, programa: Programa): Resultado {
     return { x: robo.x + d.dx, y: robo.y + d.dy };
   };
 
-  const avaliar = ({ sensor, negado }: Condicao): boolean => {
+  const avaliar = (cond: Condicao): boolean => {
+    if ('variavel' in cond) {
+      const atual = cond.variavel === 'itens' ? coletados.size : contador;
+      return cond.op === '<'
+        ? atual < cond.valor
+        : cond.op === '>'
+          ? atual > cond.valor
+          : atual === cond.valor;
+    }
+    const { sensor, negado } = cond;
     const f = frente();
     const c = celula(fase, f.x, f.y);
     const bloqueado = c === '#' || (c === 'D' && !temChave);
@@ -89,7 +108,8 @@ export function executar(fase: Fase, programa: Programa): Resultado {
     throw new ParadaDeExecucao(erro);
   };
 
-  const venceu = (): boolean => celula(fase, robo.x, robo.y) === 'G';
+  const venceu = (): boolean =>
+    celula(fase, robo.x, robo.y) === 'G' && coletados.size >= (fase.itensMeta ?? 0);
 
   const rodar = (blocos: Bloco[]): void => {
     for (const bloco of blocos) {
@@ -120,6 +140,7 @@ export function executar(fase: Fase, programa: Programa): Resultado {
           robo.x = f.x;
           robo.y = f.y;
           if (c === 'K') temChave = true;
+          if (c === 'I') coletados.add(`${f.x},${f.y}`);
           if (c === 'o') {
             falhar(bloco.id, {
               codigo: 'buraco',
@@ -131,6 +152,14 @@ export function executar(fase: Fase, programa: Programa): Resultado {
           if (venceu()) throw new ParadaDeExecucao(null);
           break;
         }
+        case 'definir':
+          contador = bloco.valor;
+          registrar(bloco.id);
+          break;
+        case 'somar':
+          contador += bloco.valor;
+          registrar(bloco.id);
+          break;
         case 'repetir': {
           registrar(bloco.id);
           if (!Number.isInteger(bloco.vezes) || bloco.vezes < 1 || bloco.vezes > 99) {
@@ -174,6 +203,14 @@ export function executar(fase: Fase, programa: Programa): Resultado {
   if (venceu()) {
     return { status: 'venceu', passos, mensagem: 'Você chegou na meta!' };
   }
+  const faltam = (fase.itensMeta ?? 0) - coletados.size;
+  if (faltam > 0 && celula(fase, robo.x, robo.y) === 'G') {
+    return {
+      status: 'incompleto',
+      passos,
+      mensagem: `Você chegou na meta, mas ainda faltam ${faltam} item(ns) para coletar.`,
+    };
+  }
   return {
     status: 'incompleto',
     passos,
@@ -202,8 +239,14 @@ export function validarPrograma(fase: Fase, programa: Programa): string | null {
       ids.add(b.id);
       if (!fase.blocosPermitidos.includes(b.tipo))
         return `Bloco não permitido nesta fase: ${b.tipo}`;
-      if ('condicao' in b && !fase.sensoresPermitidos.includes(b.condicao.sensor)) {
-        return `Sensor não permitido nesta fase: ${b.condicao.sensor}`;
+      if ('condicao' in b) {
+        const c = b.condicao;
+        if ('variavel' in c) {
+          if (!(fase.variaveisPermitidas ?? []).includes(c.variavel))
+            return `Variável não permitida nesta fase: ${c.variavel}`;
+        } else if (!fase.sensoresPermitidos.includes(c.sensor)) {
+          return `Sensor não permitido nesta fase: ${c.sensor}`;
+        }
       }
       const filhos =
         b.tipo === 'repetir' || b.tipo === 'enquanto'

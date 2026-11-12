@@ -966,3 +966,15 @@ body {
   background: var(--cor-primaria);
   color: #fff;
 }
+
+.mapa-item circle {
+  fill: #12b886;
+  stroke: #087f5b;
+  stroke-width: 3;
+}
+.variaveis {
+  display: flex;
+  gap: 1rem;
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}

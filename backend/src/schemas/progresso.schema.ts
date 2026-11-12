@@ -3,10 +3,24 @@ import type { Bloco } from '@arrowbot/shared/engine';
 
 const MAX_PROFUNDIDADE = 8;
 
-const condicao = z.object({
-  sensor: z.enum(['obstaculoAFrente', 'buracoAFrente', 'caminhoLivre', 'metaAFrente']),
-  negado: z.boolean().optional(),
-});
+const condicaoSensor = z
+  .object({
+    sensor: z.enum(['obstaculoAFrente', 'buracoAFrente', 'caminhoLivre', 'metaAFrente']),
+    negado: z.boolean().optional(),
+  })
+  .strict();
+
+const condicaoComparar = z
+  .object({
+    variavel: z.enum(['contador', 'itens']),
+    op: z.enum(['<', '=', '>']),
+    valor: z.number().int().min(-99).max(99),
+  })
+  .strict();
+
+const condicao = z.union([condicaoSensor, condicaoComparar]);
+
+const valorNumerico = z.number().int().min(-99).max(99);
 
 const id = z.string().min(1).max(64);
 
@@ -21,6 +35,8 @@ function bloco(nivel: number): z.ZodType<Bloco> {
     z
       .object({ id, tipo: z.literal('repetir'), vezes: z.number().int().min(1).max(99), corpo })
       .strict(),
+    z.object({ id, tipo: z.literal('definir'), valor: valorNumerico }).strict(),
+    z.object({ id, tipo: z.literal('somar'), valor: valorNumerico }).strict(),
     z.object({ id, tipo: z.literal('enquanto'), condicao, corpo }).strict(),
     z.object({ id, tipo: z.literal('se'), condicao, entao: corpo, senao: corpo }).strict(),
   ]) as z.ZodType<Bloco>;
