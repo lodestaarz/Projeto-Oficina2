@@ -2,15 +2,20 @@
   "name": "@arrowbot/shared",
   "version": "0.2.0",
   "private": true,
-  "description": "Tipos compartilhados entre frontend e backend (somente tipos, sem código em tempo de execução).",
+  "description": "Tipos e motor de blocos compartilhados entre frontend e backend.",
   "type": "module",
   "types": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts"
+    },
+    "./engine": {
+      "types": "./src/engine/index.ts",
+      "default": "./src/engine/index.ts"
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
   }
 }
