@@ -32,6 +32,7 @@ function carregarEnv() {
     databaseUrl: dados.DATABASE_URL,
     jwtSecret: dados.JWT_SECRET,
     jwtExpiresIn: dados.JWT_EXPIRES_IN,
+    googleClientId: dados.GOOGLE_CLIENT_ID,
   };
 }
 
