@@ -16,18 +16,18 @@ O ArrowBot é uma ferramenta web visual para ensinar conceitos básicos de lógi
 | Testes               | Vitest, Supertest, React Testing Library + jsdom, Playwright, `@vitest/coverage-v8`   |
 | Qualidade            | ESLint 9 + `typescript-eslint`, Prettier 3, GitHub Actions                            |
 
-Detalhes e versões  em [docs/tecnologias.md](docs/tecnologias.md).
+Detalhes e versões em [docs/tecnologias.md](docs/tecnologias.md).
 
 ## Documentação
 
-| Documento                                            | Conteúdo                                                  |
-| ---------------------------------------------------- | --------------------------------------------------------- |
-| [Descrição do sistema](docs/descricao-sistema.md)    | Proposta, objetivos, limites e usuários                   |
-| [Requisitos](docs/requisitos.md)                     | Requisitos funcionais, não funcionais e regras de negócio |
-| [Arquitetura](docs/arquitetura-sistema.md)           | Camadas, contrato da API, autenticação e modelo de dados  |
-| [Stack e tecnologias](docs/tecnologias.md)           | Ferramentas, versões e scripts                   |
-| [Testes](docs/testes.md)                             | Estratégia de testes ([casos de teste e matriz](tests/))  |
-| [Processo e cronograma](docs/processo.md)            | Scrum, Kanban, branches, definição de pronto e datas      |
+| Documento                                         | Conteúdo                                                  |
+| ------------------------------------------------- | --------------------------------------------------------- |
+| [Descrição do sistema](docs/descricao-sistema.md) | Proposta, objetivos, limites e usuários                   |
+| [Requisitos](docs/requisitos.md)                  | Requisitos funcionais, não funcionais e regras de negócio |
+| [Arquitetura](docs/arquitetura-sistema.md)        | Camadas, contrato da API, autenticação e modelo de dados  |
+| [Stack e tecnologias](docs/tecnologias.md)        | Ferramentas, versões e scripts                            |
+| [Testes](docs/testes.md)                          | Estratégia de testes ([casos de teste e matriz](tests/))  |
+| [Processo e cronograma](docs/processo.md)         | Scrum, Kanban, branches, definição de pronto e datas      |
 
 ## Como rodar
 

@@ -6,11 +6,11 @@ Scrum com duas sprints de desenvolvimento, precedidas por um período de prepara
 
 ## Papéis
 
-| Pessoa | Responsabilidade |
-|---|---|
-| Davi Felipe Zeneratto | PO e Documentação |
-| Gabriel Moya Amorim | Backend e Banco / Testes e CI |
-| Vinícius de Farias Santos | Frontend |
+| Pessoa                          | Responsabilidade              |
+| ------------------------------- | ----------------------------- |
+| Davi Felipe Zeneratto           | PO e Documentação             |
+| Gabriel Moya Amorim             | Backend e Banco / Testes e CI |
+| Vinícius de Farias Santos       | Frontend                      |
 | Willian Hiroshi da Silva Fukuda | Backend e Banco / Testes e CI |
 
 Cada área tem um responsável, que garante a entrega e mantém os documentos dela atualizados. Todos podem contribuir em qualquer área.
@@ -42,8 +42,8 @@ Uma issue só vai para **Concluído** quando:
 
 ## Cronograma
 
-| Etapa | Período | Entrega |
-|---|---|---|
-| Preparação | 05/10 a 16/10 | Documentação, requisitos, arquitetura, ambiente, CI e projetos base |
-| Sprint 1 | 17/10 a 07/11 | Contas e sessão, área de movimentação, botões, teclado, limites, recomeçar, tabela de usuários |
-| Sprint 2 | 08/11 a 30/11 | Sequência de comandos, execução passo a passo, perfil, testes E2E e entrega final |
+| Etapa      | Período       | Entrega                                                                                        |
+| ---------- | ------------- | ---------------------------------------------------------------------------------------------- |
+| Preparação | 05/10 a 16/10 | Documentação, requisitos, arquitetura, ambiente, CI e projetos base                            |
+| Sprint 1   | 17/10 a 07/11 | Contas e sessão, área de movimentação, botões, teclado, limites, recomeçar, tabela de usuários |
+| Sprint 2   | 08/11 a 30/11 | Sequência de comandos, execução passo a passo, perfil, testes E2E e entrega final              |

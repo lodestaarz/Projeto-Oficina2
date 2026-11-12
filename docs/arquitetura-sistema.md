@@ -60,12 +60,12 @@ Estrutura de `frontend/src/`:
 
 Rotas de tela (React Router):
 
-| Rota        | Tela                                              | Exige sessão |
-| ----------- | ------------------------------------------------- | ------------ |
-| `/login`    | Login com e-mail/senha e botão Google             | Não          |
-| `/cadastro` | Cadastro com nome, e-mail e senha, e botão Google | Não          |
-| `/playboard`| Área de movimentação e sequência de comandos      | Sim          |
-| `/perfil`   | Dados do usuário e botão Sair                     | Sim          |
+| Rota         | Tela                                              | Exige sessão |
+| ------------ | ------------------------------------------------- | ------------ |
+| `/login`     | Login com e-mail/senha e botão Google             | Não          |
+| `/cadastro`  | Cadastro com nome, e-mail e senha, e botão Google | Não          |
+| `/playboard` | Área de movimentação e sequência de comandos      | Sim          |
+| `/perfil`    | Dados do usuário e botão Sair                     | Sim          |
 
 Em desenvolvimento, o Vite encaminha as chamadas a `/api` para `http://localhost:3001` (`vite.config.ts`).
 
