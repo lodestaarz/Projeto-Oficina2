@@ -16,18 +16,18 @@ O ArrowBot é uma ferramenta web visual para ensinar conceitos básicos de lógi
 | Testes               | Vitest, Supertest, React Testing Library + jsdom, Playwright, `@vitest/coverage-v8`   |
 | Qualidade            | ESLint 9 + `typescript-eslint`, Prettier 3, GitHub Actions                            |
 
-Detalhes e versões  em [docs/tecnologias.md](docs/tecnologias.md).
+Detalhes e versões em [docs/tecnologias.md](docs/tecnologias.md).
 
 ## Documentação
 
-| Documento                                            | Conteúdo                                                  |
-| ---------------------------------------------------- | --------------------------------------------------------- |
-| [Descrição do sistema](docs/descricao-sistema.md)    | Proposta, objetivos, limites e usuários                   |
-| [Requisitos](docs/requisitos.md)                     | Requisitos funcionais, não funcionais e regras de negócio |
-| [Arquitetura](docs/arquitetura-sistema.md)           | Camadas, contrato da API, autenticação e modelo de dados  |
-| [Stack e tecnologias](docs/tecnologias.md)           | Ferramentas, versões e scripts                   |
-| [Testes](docs/testes.md)                             | Estratégia de testes ([casos de teste e matriz](tests/))  |
-| [Processo e cronograma](docs/processo.md)            | Scrum, Kanban, branches, definição de pronto e datas      |
+| Documento                                         | Conteúdo                                                  |
+| ------------------------------------------------- | --------------------------------------------------------- |
+| [Descrição do sistema](docs/descricao-sistema.md) | Proposta, objetivos, limites e usuários                   |
+| [Requisitos](docs/requisitos.md)                  | Requisitos funcionais, não funcionais e regras de negócio |
+| [Arquitetura](docs/arquitetura-sistema.md)        | Camadas, contrato da API, autenticação e modelo de dados  |
+| [Stack e tecnologias](docs/tecnologias.md)        | Ferramentas, versões e scripts                            |
+| [Testes](docs/testes.md)                          | Estratégia de testes ([casos de teste e matriz](tests/))  |
+| [Processo e cronograma](docs/processo.md)         | Scrum, Kanban, branches, definição de pronto e datas      |
 
 ## Como rodar
 
@@ -68,6 +68,7 @@ Crie um Client ID OAuth do tipo "Aplicativo da Web" no Google Cloud Console (API
 | `npm run test:integration -w backend` | Testes com PostgreSQL de verdade (exige `TEST_DATABASE_URL`)              |
 | `npm run test:e2e`                    | Testes de ponta a ponta no navegador (Playwright; exige o banco no ar)    |
 | `npm run lint`                        | Roda o ESLint nos dois projetos                                           |
+| `npm run hooks`                       | Ativa a checagem pre-commit (formatação, tipos e lint)                    |
 | `npm run format`                      | Formata o código com Prettier                                             |
 | `npm run build`                       | Compila o backend (`backend/dist`) e gera o build de produção do frontend |
 

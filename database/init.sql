@@ -1,4 +1,4 @@
-/// Modelo para a criação do banco de dados, para definir o nome dos atributos. 
+-- Modelo para a criação do banco de dados, para definir o nome dos atributos. 
 
 CREATE TABLE IF NOT EXISTS usuarios (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),

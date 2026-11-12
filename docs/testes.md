@@ -4,13 +4,13 @@ Responsável: Willian Hiroshi
 
 ## Tipos de teste
 
-| Tipo | O que testa | Ferramenta | Onde fica |
-|---|---|---|---|
-| Unitário | Regras puras do jogo (`move`, `runSequence`) e services do backend (hash, JWT, validação) | Vitest | `frontend/src/**/*.test.js`, `backend/tests/` |
-| API | Rotas do Express de ponta a ponta dentro do backend, sem subir servidor | Vitest e Supertest | `backend/tests/` |
-| Integração com banco | Repositories contra um PostgreSQL de teste | Vitest | `backend/tests/integration/` |
-| Componentes | Grade, controles, teclado, lista de comandos e formulários | Vitest, React Testing Library e jsdom | `frontend/src/**/*.test.jsx` |
-| Ponta a ponta (E2E) | Jornada completa do usuário no navegador | Playwright | `tests/e2e/` |
+| Tipo                 | O que testa                                                                               | Ferramenta                            | Onde fica                                     |
+| -------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------- |
+| Unitário             | Regras puras do jogo (`move`, `runSequence`) e services do backend (hash, JWT, validação) | Vitest                                | `frontend/src/**/*.test.js`, `backend/tests/` |
+| API                  | Rotas do Express de ponta a ponta dentro do backend, sem subir servidor                   | Vitest e Supertest                    | `backend/tests/`                              |
+| Integração com banco | Repositories contra um PostgreSQL de teste                                                | Vitest                                | `backend/tests/integration/`                  |
+| Componentes          | Grade, controles, teclado, lista de comandos e formulários                                | Vitest, React Testing Library e jsdom | `frontend/src/**/*.test.jsx`                  |
+| Ponta a ponta (E2E)  | Jornada completa do usuário no navegador                                                  | Playwright                            | `tests/e2e/`                                  |
 
 ## Técnicas para escrever os casos
 

@@ -31,6 +31,8 @@ export default defineConfig({
         DATABASE_URL: databaseUrl,
         JWT_SECRET: process.env.JWT_SECRET ?? 'segredo-apenas-para-e2e',
         JWT_EXPIRES_IN: '1d',
+        // Os testes e2e criam muitas contas do mesmo IP: relaxa o limite de tentativas.
+        LIMITE_LOGIN_MAXIMO: '1000',
       },
     },
     {
