@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import request from 'supertest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { solucaoDaFase } from '@arrowbot/shared/engine';
+import { FASES, solucaoDaFase } from '@arrowbot/shared/engine';
 
 vi.mock('../src/repositories/progresso.repository.js', () => ({
   listarDoUsuario: vi.fn(),
@@ -22,10 +22,10 @@ beforeEach(() => {
 });
 
 describe('GET /api/fases', () => {
-  it('lista as 9 fases sem exigir login', async () => {
+  it('lista todas as fases sem exigir login', async () => {
     const r = await request(app).get('/api/fases');
     expect(r.status).toBe(200);
-    expect(r.body.fases).toHaveLength(9);
+    expect(r.body.fases).toHaveLength(FASES.length);
   });
 
   it('detalha uma fase e responde 404/400 nos casos ruins', async () => {

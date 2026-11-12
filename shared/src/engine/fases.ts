@@ -1,6 +1,6 @@
 import type { Fase } from './tipos.ts';
 
-/** Fases do MVP (1–9). Cada uma introduz um conceito. Grade: '.' chão, '#' parede, 'o' buraco, 'G' meta, 'K' chave, 'D' porta. */
+/** Fases (1–12 até aqui). Cada uma introduz um conceito. Grade: '.' chão, '#' parede, 'o' buraco, 'G' meta, 'K' chave, 'D' porta. */
 export const FASES: readonly Fase[] = [
   {
     id: 1,
@@ -146,6 +146,56 @@ export const FASES: readonly Fase[] = [
       '"Enquanto" repete até a condição ficar falsa.',
       'A condição é "caminho livre" e o bloco de dentro é "avançar".',
       'enquanto caminho livre { avançar }.',
+    ],
+  },
+  {
+    id: 10,
+    titulo: 'Até a bandeira',
+    conceito: 'Enquanto',
+    enunciado:
+      'O corredor é longo e você não quer contar casas. Repita "enquanto a bandeira não estiver à frente".',
+    grade: ['..........G'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'enquanto'],
+    sensoresPermitidos: ['metaAFrente'],
+    blocosIdeais: 3,
+    dicas: [
+      'Use "enquanto" com a condição "bandeira à frente" invertida (não).',
+      'Dentro do enquanto vai só um "avançar". Depois dele, mais um "avançar" para pisar na bandeira.',
+      'enquanto não (bandeira à frente) { avançar }, avançar.',
+    ],
+  },
+  {
+    id: 11,
+    titulo: 'Corredor com curva',
+    conceito: 'Enquanto',
+    enunciado: 'Ande até o fim do corredor, vire e ande de novo. Dois "enquanto" resolvem.',
+    grade: ['.....', '####.', 'G....'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'enquanto'],
+    sensoresPermitidos: ['caminhoLivre'],
+    blocosIdeais: 8,
+    dicas: [
+      'Enquanto o caminho estiver livre, avance. Quando acabar, gire.',
+      'Depois da curva para baixo, gire de novo e repita o "enquanto".',
+      'enquanto livre { avançar }, direita, avançar ×2, direita, enquanto livre { avançar }.',
+    ],
+  },
+  {
+    id: 12,
+    titulo: 'Seguindo a parede',
+    conceito: 'Enquanto',
+    enunciado:
+      'Combine "enquanto" e "se": repita até a bandeira aparecer à frente; se houver parede, gire; senão, avance.',
+    grade: ['...#', '##.#', 'G..#'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'enquanto', 'se'],
+    sensoresPermitidos: ['obstaculoAFrente', 'metaAFrente'],
+    blocosIdeais: 5,
+    dicas: [
+      'O enquanto termina quando a bandeira está à frente.',
+      'Dentro: se obstáculo à frente, gire à direita; senão, avance. Ao final, avance mais uma vez.',
+      'enquanto não (bandeira à frente) { se obstáculo { direita } senão { avançar } }, avançar.',
     ],
   },
 ];
