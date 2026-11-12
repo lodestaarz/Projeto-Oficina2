@@ -671,6 +671,10 @@ body {
   max-width: 560px;
 }
 
+.perfil > .botao {
+  margin-top: 16px;
+}
+
 .cartao-perfil {
   display: flex;
   align-items: center;
