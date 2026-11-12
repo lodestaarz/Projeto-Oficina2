@@ -68,6 +68,7 @@ Crie um Client ID OAuth do tipo "Aplicativo da Web" no Google Cloud Console (API
 | `npm run test:integration -w backend` | Testes com PostgreSQL de verdade (exige `TEST_DATABASE_URL`)              |
 | `npm run test:e2e`                    | Testes de ponta a ponta no navegador (Playwright; exige o banco no ar)    |
 | `npm run lint`                        | Roda o ESLint nos dois projetos                                           |
+| `npm run hooks`                       | Ativa a checagem pre-commit (formatação, tipos e lint)                    |
 | `npm run format`                      | Formata o código com Prettier                                             |
 | `npm run build`                       | Compila o backend (`backend/dist`) e gera o build de produção do frontend |
 

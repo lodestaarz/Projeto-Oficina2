@@ -1,0 +1,6 @@
+#!/bin/sh
+# Checagens rápidas antes de cada commit. Ative uma vez com: npm run hooks
+set -e
+npm run format:check --silent
+npm run typecheck --silent
+npm run lint --silent

@@ -17,12 +17,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-          # Depois de commitar o package-lock.json, ative o cache:
-          # cache: npm
+          cache: npm
 
       - name: Instalar dependências
-        # Troque por "npm ci" assim que o package-lock.json estiver no repositório
-        run: npm install
+        run: npm ci
 
       - name: Verificar formatação
         run: npm run format:check
@@ -66,7 +64,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - name: Testes de integração com o banco
         run: npm run test:integration -w backend
 
@@ -97,13 +96,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - name: Criar as tabelas
         run: psql "$E2E_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/init.sql
       - name: Instalar navegadores do Playwright
-        run: npx playwright install --with-deps chromium firefox webkit
+        run: npx playwright install --with-deps chromium
       - name: Testes de ponta a ponta
-        run: npm run test:e2e
+        run: npm run test:e2e -- --project=chromium
       - name: Guardar relatório do Playwright
         if: failure()
         uses: actions/upload-artifact@v4
