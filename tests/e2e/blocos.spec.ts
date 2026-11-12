@@ -64,3 +64,15 @@ test('fase 13 mostra itens no mapa e o contador de itens', async ({ page }, info
   await expect(page.getByTestId('variaveis')).toContainText('itens: 0');
   await page.screenshot({ path: info.outputPath('fase13-itens.png') });
 });
+
+test('fase 16 libera função e chamar e gera o código da chamada', async ({ page }, info) => {
+  await cadastrar(page);
+  await page.goto('/fases/16');
+  await expect(page.getByTestId('oficina')).toBeVisible();
+  await expect(
+    page.locator('.blocklyFlyout .blocklyDraggable', { hasText: 'função' }).first(),
+  ).toBeVisible();
+  await arrastarBloco(page, 'chamar função');
+  await expect(page.getByTestId('codigo')).toHaveText(/^\s*A\(\);\s*$/);
+  await page.screenshot({ path: info.outputPath('fase16-funcao.png') });
+});

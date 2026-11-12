@@ -254,6 +254,57 @@ export const FASES: readonly Fase[] = [
       'enquanto itens < 3 { se obstáculo { direita } senão { avançar } }, enquanto livre { avançar }.',
     ],
   },
+  {
+    id: 16,
+    titulo: 'Minha primeira função',
+    conceito: 'Funções',
+    enunciado:
+      'Os degraus se repetem. Em vez de copiar os blocos, crie a função A com um degrau (avançar, direita, avançar, esquerda) e chame-a 3 vezes.',
+    grade: ['..##', '#..#', '##..', '###G'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'funcao', 'chamar'],
+    sensoresPermitidos: [],
+    blocosIdeais: 8,
+    dicas: [
+      'Cada degrau é: avançar, girar à direita, avançar, girar à esquerda.',
+      'Monte o degrau dentro do bloco "função A" e use "chamar A" três vezes.',
+      'função A { avançar, direita, avançar, esquerda } e depois chamar A, chamar A, chamar A.',
+    ],
+  },
+  {
+    id: 17,
+    titulo: 'Função e repetição',
+    conceito: 'Funções',
+    enunciado:
+      'Contorne o quadrado: crie a função A que anda 2 casas e gira à direita, repita-a 3 vezes e avance até a bandeira.',
+    grade: ['...', 'G#.', '...'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'repetir', 'funcao', 'chamar'],
+    sensoresPermitidos: [],
+    blocosIdeais: 7,
+    dicas: [
+      'A função A é: repetir 2 { avançar } e depois girar à direita.',
+      'Use repetir 3 { chamar A } e termine com um avançar.',
+      'função A { repetir 2 { avançar }, direita }, repetir 3 { chamar A }, avançar.',
+    ],
+  },
+  {
+    id: 18,
+    titulo: 'Função que decide',
+    conceito: 'Funções',
+    enunciado:
+      'Faça a função A decidir sozinha: se houver obstáculo à frente, gire à direita; senão, avance. Chame-a até chegar na bandeira.',
+    grade: ['....', '###.', 'G...'],
+    inicio: { x: 0, y: 0, dir: 1 },
+    blocosPermitidos: ['avancar', 'girar', 'repetir', 'se', 'funcao', 'chamar'],
+    sensoresPermitidos: ['obstaculoAFrente', 'caminhoLivre'],
+    blocosIdeais: 6,
+    dicas: [
+      'A função A tem um "se obstáculo à frente".',
+      'Dentro do se: girar à direita; no senão: avançar.',
+      'função A { se obstáculo { direita } senão { avançar } } e repetir 10 { chamar A }.',
+    ],
+  },
 ];
 
 export function buscarFase(id: number): Fase | undefined {

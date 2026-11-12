@@ -1,6 +1,7 @@
 import * as Blockly from 'blockly/core';
 import 'blockly/blocks';
 import * as Pt from 'blockly/msg/pt-br';
+import { NOMES_FUNCAO } from '@arrowbot/shared/engine';
 import type { Fase, Sensor, TipoBloco, Variavel } from '@arrowbot/shared/engine';
 
 Blockly.setLocale(Pt as unknown as Record<string, string>);
@@ -12,7 +13,8 @@ export const ROTULO_SENSOR: Record<Sensor, string> = {
   metaAFrente: 'meta à frente',
 };
 
-const COR = { movimento: 210, controle: 35, logica: 290, inicio: 120, variavel: 330 };
+const COR = { movimento: 210, controle: 35, logica: 290, inicio: 120, variavel: 330, funcao: 160 };
+const OPCOES_FUNCAO: Array<[string, string]> = NOMES_FUNCAO.map((n) => [n, n]);
 
 /** Sensores liberados na fase aberta (as opções do dropdown dependem dela). */
 let sensoresAtivos: Sensor[] = ['obstaculoAFrente'];
@@ -116,7 +118,28 @@ function registrarBlocos(): void {
       colour: COR.variavel,
       tooltip: 'Soma um número ao contador.',
     },
+    {
+      type: 'arrow_chamar',
+      message0: 'chamar função %1',
+      args0: [{ type: 'field_dropdown', name: 'NOME', options: OPCOES_FUNCAO }],
+      previousStatement: null,
+      nextStatement: null,
+      colour: COR.funcao,
+      tooltip: 'Executa os blocos da função escolhida.',
+    },
   ]);
+
+  // Definição de função: bloco "chapéu" (sem encaixe em cima nem embaixo), solto no espaço.
+  Blockly.Blocks['arrow_funcao'] = {
+    init(this: Blockly.Block) {
+      this.appendDummyInput()
+        .appendField('função')
+        .appendField(new Blockly.FieldDropdown(OPCOES_FUNCAO), 'NOME');
+      this.appendStatementInput('CORPO');
+      this.setColour(COR.funcao);
+      this.setTooltip('Define uma função: os blocos de dentro rodam a cada "chamar função".');
+    },
+  };
 
   Blockly.Blocks['arrow_enquanto'] = {
     init(this: Blockly.Block) {
@@ -150,6 +173,8 @@ const TIPO_BLOCKLY: Record<TipoBloco, string> = {
   se: 'arrow_se',
   definir: 'arrow_definir',
   somar: 'arrow_somar',
+  funcao: 'arrow_funcao',
+  chamar: 'arrow_chamar',
 };
 
 /** Monta a caixa de ferramentas só com o que a fase libera. */
