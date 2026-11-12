@@ -23,8 +23,10 @@ test('jogo e perfil sem violações WCAG A/AA', async ({ page }) => {
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Senha').fill('senha-a11y-123');
   await page.getByRole('button', { name: 'Criar conta' }).click();
+  await expect(page).toHaveURL(/\/fases$/);
+  await page.getByRole('link', { name: 'Treino livre' }).click();
   await expect(page.getByTestId('posicao')).toBeVisible();
-  expect(await violacoes(page), '/').toEqual([]);
+  expect(await violacoes(page), '/treino').toEqual([]);
 
   await page.getByRole('link', { name: 'Perfil' }).click();
   await expect(page.getByRole('heading', { name: 'Meu perfil' })).toBeVisible();
@@ -38,7 +40,7 @@ test('seleção de fases e fase com blocos sem violações WCAG A/AA', async ({ 
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Senha').fill('senha-a11y-123');
   await page.getByRole('button', { name: 'Criar conta' }).click();
-  await expect(page.getByTestId('posicao')).toBeVisible();
+  await expect(page).toHaveURL(/\/fases$/);
 
   await page.goto('/fases');
   await expect(page.getByRole('heading', { name: 'Fases', level: 1 })).toBeVisible();

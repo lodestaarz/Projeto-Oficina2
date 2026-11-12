@@ -19,7 +19,8 @@ export default function App() {
       </Route>
       <Route element={<RotaProtegida />}>
         <Route element={<Layout />}>
-          <Route path="/" element={<JogoPage />} />
+          <Route path="/" element={<Navigate to="/fases" replace />} />
+          <Route path="/treino" element={<JogoPage />} />
           <Route path="/fases" element={<SelecaoFasesPage />} />
           <Route
             path="/fases/:id"
